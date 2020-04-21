@@ -1,0 +1,90 @@
+:root{
+    --primaryColor:rgb(100,100,100);
+    --secondaryColor:white;
+}
+
+.container{
+    margin:auto auto;
+    height:90vh;
+    width:95vw;
+}
+
+.time{
+    font-size:190px;
+    text-align: center;
+    
+}
+
+#timer{padding:15vh 10vw;}
+
+#notifications{
+    width:100%;
+}
+.notification{
+    width:50%;
+    font-size:80px;
+    text-align: center;
+    margin:0 auto;
+}
+
+#fullscreenButton{
+    position: static;
+    right:0;
+    top:0;
+}
+
+*{
+    font-family: endzone,Arial, Helvetica, sans-serif;
+    color:var(--primaryColor);
+}
+
+@font-face {
+    font-family: endzone;
+    src: url(../media/fonts/EndzoneSans-Medium.otf);
+  }
+  
+#app{
+    background-color: var(--secondaryColor);
+}
+
+.timeSection{
+    display:inline-block;
+    text-align: center;
+    font-size: 10vw;
+}
+#timerValueLabel{
+    width:75px;
+    height:35px;
+}
+#timerValueMinute,#timerValueSecond{
+    width:35px;
+    height:35px;
+}
+
+
+#btnStartTimer{
+    background: none;
+    width:175px;
+    font-size: 28px;
+    height:45px;
+}
+
+.buttons{
+    float:right;
+}
+.buttons i{
+    display: block;
+    font-size: 2.5vw;
+}
+.timer{
+    width: 25vw;
+    display: inline-block;
+    margin:5vw;
+}
+.timerLabel{
+    text-align: center;
+    font-size: 4vw;
+}
+.timer .timeSection{
+    font-size: 8vw;
+}

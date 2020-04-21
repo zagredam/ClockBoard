@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Presentation Clock</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">           
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        </script>
+    </head>
+    <body>
+        <nav id="nav">
+            <div id="fullscreenButton" class="fullscreen">
+                <button id="fullscreen-open" onclick="makeFullscreen()">FullScreen</button>
+                <button id="fullscreen-close" style="display: none" onclick="closeFullscreen()">Close FullScreen</button>
+            </div>
+        </nav>
+        <div id="app" class="container">
+            <div id="presentationClock">
+                <div class="time">
+                    <div id="clockHour" class="timeSection"></div>:
+                    <div id="clockMinute" class="timeSection"></div>:
+                    <div id="clockSecond" class="timeSection"></div>
+                    <div id="clockMeridium" class="timeSection"></div>
+                </div>
+                <div id="notifications" class="notifications">
+                </div>
+                <script src="./assets/scripts/presentationClock.js"></script>
+            </div>
+            <div id="presentationTimers">
+            
+                <div id="addTimerOptions">
+                    <input id="timerValueMinute" type="text" placeholder="Minutes..."/>
+                    :
+                    <input id="timerValueSecond" type="text" placeholder="Seconds..."/>
+                    <input id="timerValueLabel" type="text" placeholder="Label"/>
+                    <button id="btnStartTimer" class="timerbutton" onclick="startTimer()">Add Timer +</button>
+                </div>
+                <div id="timersSection">
+                    
+                </div>
+
+                <script src="./assets/scripts/countdownTimer.js"></script>
+            </div>
+        </div>
+    </body>
+    <script src="./assets/scripts/main.js"></script>
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+</html>
