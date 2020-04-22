@@ -10,7 +10,7 @@
 }
 
 .time{
-    font-size:190px;
+    font-size:10vw;
     text-align: center;
     
 }
@@ -33,9 +33,10 @@
     top:0;
 }
 
-*{
+body{
     font-family: endzone,Arial, Helvetica, sans-serif;
     color:var(--primaryColor);
+    background-color: var(--secondaryColor);
 }
 
 @font-face {
@@ -45,6 +46,7 @@
   
 #app{
     background-color: var(--secondaryColor);
+    color: var(--primaryColor);
 }
 
 .timeSection{
@@ -53,22 +55,27 @@
     font-size: 10vw;
 }
 #timerValueLabel{
-    width:75px;
-    height:35px;
+    width: 175px;
+    height: 55px;
+    font-size: 2.5vw;
 }
 #timerValueMinute,#timerValueSecond{
-    width:35px;
-    height:35px;
+    width: 50px;
+    height: 55px;
+    font-size: 2.5vw;
 }
 
 
 #btnStartTimer{
     background: none;
-    width:175px;
+    width: 175px;
     font-size: 28px;
-    height:45px;
+    height: 60px;
+    vertical-align: bottom;
+    color: var(--secondaryColor);
+    border-color: var(--primaryColor);
+    border: 1px solid;
 }
-
 .buttons{
     float:right;
 }
@@ -77,7 +84,7 @@
     font-size: 2.5vw;
 }
 .timer{
-    width: 25vw;
+    width: 21vw;
     display: inline-block;
     margin:5vw;
 }
@@ -86,5 +93,90 @@
     font-size: 4vw;
 }
 .timer .timeSection{
-    font-size: 8vw;
+    font-size: 5vw;
 }
+
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: var(--primaryColor);
+    color: var(--secondaryColor);
+    overflow-x: hidden;
+    transition: 0.5s;
+    opacity: .9;
+  }
+  
+  .overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  /* .overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+  } */
+  
+  .overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+  }
+  
+  .overlay.show{
+      width:100vw;
+  }
+
+  .actionIcon{
+      font-size:3vw;
+      text-decoration: none;
+  }
+
+  #dateContent{
+      font-size: 5vw;
+      text-align: center;
+  }
+
+  #clockSecond{
+      width:14vw;
+  }
+
+  #addTimerOptions{
+      text-align: center;
+  }
+
+  .timerValues{
+    width: 80%;
+    display: inline-block;
+  }
+
+  .invisible{
+      visibility: hidden;
+  }
+
+  .navMenuRow{
+      width:100%;
+      text-align:center;
+      margin:10px;
+  }
+
+  #themeSelect{
+    min-width:50px;
+    padding:10px;
+  }

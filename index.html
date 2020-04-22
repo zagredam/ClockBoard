@@ -7,33 +7,81 @@
         </script>
     </head>
     <body>
-        <nav id="nav">
-            <div id="fullscreenButton" class="fullscreen">
-                <button id="fullscreen-open" onclick="makeFullscreen()">FullScreen</button>
-                <button id="fullscreen-close" style="display: none" onclick="closeFullscreen()">Close FullScreen</button>
-            </div>
-        </nav>
         <div id="app" class="container">
-            <div id="presentationClock">
-                <div class="time">
-                    <div id="clockHour" class="timeSection"></div>:
-                    <div id="clockMinute" class="timeSection"></div>:
-                    <div id="clockSecond" class="timeSection"></div>
-                    <div id="clockMeridium" class="timeSection"></div>
-                </div>
-                <div id="notifications" class="notifications">
-                </div>
-                <script src="./assets/scripts/presentationClock.js"></script>
+            <div>
+                <div class="actionIcon" onclick="toggleNav()">&#9776;</a>
             </div>
-            <div id="presentationTimers">
-            
-                <div id="addTimerOptions">
+            <div id="nav" class="overlay">
+                <div>
+                    <div style="width: 45%;display: inline-block;text-align:left">
+                        <div class="actionIcon" onclick="toggleNav()">&times;</div>
+                    </div>
+                    <div id="fullscreenButton" class="fullscreen" style="text-align: right;width: 45%; display: inline-block;">
+                        <i id="fullscreen-open" onclick="makeFullscreen()" class="fas fa-expand actionIcon"></i>
+                        <i id="fullscreen-close" style="display: none" onclick="closeFullscreen()" class="fas fa-compress actionIcon"></i>
+                    </div>
+                    <div class="navMenuRow">
+                        <strong>Theme: </strong>
+                        <select id="themeSelect" onchange="changeTheme()">
+                            <option value="ARZ">ARZ</option>
+                            <option value="ATL">ATL</option>
+                            <option value="BLT">BLT</option>
+                            <option value="BUF">BUF</option>
+                            <option value="CAR">CAR</option>
+                            <option value="CHI">CHI</option>
+                            <option value="CIN">CIN</option>
+                            <option value="CLV">CLV</option>
+                            <option value="DAL">DAL</option>
+                            <option value="DEN">DEN</option>
+                            <option value="DET">DET</option>                            
+                            <option value="GB">GB</option>
+                            <option value="HST">HST</option>
+                            <option value="IND">IND</option>
+                            <option value="JAX">JAX</option>
+                            <option value="KC">KC</option>
+                            <option value="LAC">LAC</option>
+                            <option value="LA">LA</option>
+                            <option value="MIA">MIA</option>
+                            <option value="MIN">MIN</option>
+                            <option value="NE">NE</option>
+                            <option value="NO">NO</option>
+                            <option value="NYG">NYG</option>
+                            <option value="NYJ">NYJ</option>
+                            <option value="LV">LV</option>
+                            <option value="PHI">PHI</option>
+                            <option value="PIT">PIT</option>
+                            <option value="SF">SF</option>
+                            <option value="SEA">SEA</option>
+                            <option value="TB">TB</option>
+                            <option value="TEN">TEN</option>
+                            <option value="WAS">WAS</option>                       
+                        </select>
+                    </div>
+                </div>          
+                
+                <div id="addTimerOptions" class="navMenuRow">
                     <input id="timerValueMinute" type="text" placeholder="Minutes..."/>
                     :
                     <input id="timerValueSecond" type="text" placeholder="Seconds..."/>
                     <input id="timerValueLabel" type="text" placeholder="Label"/>
                     <button id="btnStartTimer" class="timerbutton" onclick="startTimer()">Add Timer +</button>
                 </div>
+            </div>
+            <div id="presentationClock">
+                <div class="time">
+                    <div id="clockHour" class="timeSection"></div>
+                    <div id="clockMinute" class="timeSection"></div>
+                    <div id="clockSecond" class="timeSection"></div>
+                    <div id="clockMeridium" class="timeSection"></div>
+                </div>
+                <div id="dateContent" class="notifications">
+                </div>
+                <div id="notifications" class="notifications">
+                </div>
+                <script src="./assets/scripts/presentationClock.js"></script>
+            </div>
+            <div id="presentationTimers">         
+                
                 <div id="timersSection">
                     
                 </div>
@@ -44,4 +92,5 @@
     </body>
     <script src="./assets/scripts/main.js"></script>
     <link rel="stylesheet" href="./assets/styles/styles.css">
+    <link rel="stylesheet" href="./assets/styles/NFL_teams.css">
 </html>

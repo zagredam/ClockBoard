@@ -28,4 +28,11 @@ function closeFullscreen(){
   document.getElementById("fullscreen-open").style.display = "initial";
 }
 
+function toggleNav(){
+  $(".overlay").toggleClass("show");
+}
 
+function changeTheme(){
+  var clubClass = $("#themeSelect").val();
+  $("body")[0].classList=clubClass;
+}

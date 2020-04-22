@@ -1,0 +1,255 @@
+.NFL{
+    /*background#013369 url(/assets/media/images/logos/NFL.png) center no-repeat;
+    */--primaryColor:#013369;
+    --secondaryColor:#D50A0A;
+    --tertiaryColor: #FFFFFF;
+}
+
+.NFC{
+    /*background#013369 url(/assets/media/images/logos/NFC.png) center no-repeat;
+    */--primaryColor:#013369;
+    --secondaryColor:#FFFFFF;
+
+}
+.AFC{
+    /*background#D50A0A url(/assets/media/images/logos/AFC.png) center no-repeat;
+    */--primaryColor:#013369;
+    --secondaryColor:#FFFFFF;
+}
+.ARZ {
+    /*background#97233F url(/assets/media/images/logos/ARZ.png) center no-repeat;
+    */--primaryColor:#97233F;
+    --secondaryColor:#FFFFFF;
+    --tertiaryColor: #000000;
+}
+
+.ATL {
+    /*background#A61930 url(/assets/media/images/logos/ATL.png) center no-repeat;
+    */--primaryColor:#A61930;
+    --secondaryColor:#000000;
+    --tertiaryColor: #FFFFFF;
+}
+
+.BLT {
+    /*background#24135F url(/assets/media/images/logos/BLT.png) center no-repeat;
+    */--primaryColor:#24135F;
+    --secondaryColor:#000000;
+    --tertiaryColor: #9A7611;
+}
+
+.BUF {
+    /*background#00338D url(/assets/media/images/logos/BUF.png) center no-repeat;
+    */--primaryColor:#00338D;
+    --secondaryColor:#C60C30;
+    --tertiaryColor: #FFFFFF;
+}
+
+.CAR {
+    /*background#0085CA url(/assets/media/images/logos/CAR.png) center no-repeat;
+    */--primaryColor:#0085CA;
+    --secondaryColor:#000000;
+    --tertiaryColor: #BFC0BF;
+}
+
+.CHI {
+    /*background#0B162A url(/assets/media/images/logos/CHI.png)  center no-repeat;
+    */--primaryColor:#0B162A;
+    --secondaryColor:#E64100;
+    --tertiaryColor: #FFFFFF;
+}
+
+.CIN {
+    /*background#FB4F14 url(/assets/media/images/logos/CIN.png) center no-repeat;
+    */--primaryColor:#000000;
+    --secondaryColor:#FB4F14;
+    --tertiaryColor: #FFFFFF;
+}
+
+.CLV {
+    /*background#311D00 url(/assets/media/images/logos/CLV.png) center no-repeat;
+    */--primaryColor:#FF3300;
+    --secondaryColor:#311D00;
+    --tertiaryColor: #FFFFFF;
+}
+
+.DAL {
+    /*background#002244 url(/assets/media/images/logos/DAL.png) center no-repeat;
+    */--primaryColor:#002244;
+    --secondaryColor:#B0B7BC;
+    --tertiaryColor: #FFFFFF;
+}
+
+.DEN {
+    /*background#0A2343 url(/assets/media/images/logos/DEN.png) center no-repeat;
+    */--primaryColor:#0A2343;
+    --secondaryColor:#FC4C02;
+    --tertiaryColor: #FFFFFF;
+}
+
+.DET {
+    /*background#0076B6 url(/assets/media/images/logos/DET.png) center no-repeat;
+    */--primaryColor:#0076B6;
+    --secondaryColor:#B0B7BC;
+    --tertiaryColor: #FFFFFF;
+}
+
+.GB {
+    /*background#FFB612 url(/assets/media/images/logos/GB.png) center no-repeat;
+    */--primaryColor:#203731;
+    --secondaryColor:#FFB612;
+    --tertiaryColor: #FFFFFF;
+}
+
+.HST {
+    /*background#03202F url(/assets/media/images/logos/HST.png) center no-repeat;
+    */--primaryColor:#03202F;
+    --secondaryColor:#FFFFFF;
+    --tertiaryColor: #A71930;
+}
+
+.IND {
+    /*background#002C5F url(/assets/media/images/logos/IND.png) center no-repeat;
+    */--primaryColor:#002C5F;
+    --secondaryColor:white;
+    --tertiaryColor: #A5ACAF;
+}
+
+.JAX {
+    /*background#0D6778 url(/assets/media/images/logos/JAX.png) center no-repeat;
+    */--primaryColor:#101820;
+    --secondaryColor:#0D6778;
+    --tertiaryColor: #D7A22A;
+}
+
+.KC {
+    /*background#E31837 url(/assets/media/images/logos/KC.png) center no-repeat;
+    */--primaryColor:#E31837;
+    --secondaryColor:#FFB612;
+    --tertiaryColor: #FFFFFF;
+}
+
+.LAC {
+    /*background#0080C6 url(/assets/media/images/logos/LAC.png) center no-repeat;
+    */--primaryColor:#0080C6;
+    --secondaryColor:#FFC20E;
+    --tertiaryColor: #FFFFFF;
+}
+
+.SD {
+    /*background#0080C6 url(/assets/media/images/logos/LAC.png) center no-repeat;
+    */--primaryColor:#0080C6;
+    --secondaryColor:#FFC20E;
+    --tertiaryColor: #FFFFFF;
+}
+
+.LA {
+    /*background#003594 url(/assets/media/images/logos/LA.png) center no-repeat;
+    */--primaryColor:#003594;
+    --secondaryColor:#FFD100;
+    --tertiaryColor:#FF8200;
+}
+
+.MIA {
+    /*background#008E97 url(/assets/media/images/logos/MIA.png) center no-repeat;
+    */--primaryColor:#008E97;
+    --secondaryColor:#FC4C02;
+    --tertiaryColor: #FFFFFF;
+}
+
+
+.MIN {
+    /*background#4F2683 url(/assets/media/images/logos/MIN.png) center no-repeat;
+    */--primaryColor:#4F2683;
+    --secondaryColor:#FFC62F; 
+    --tertiaryColor: #FFFFFF;
+}
+
+.NE {
+    /*background#0C2340 url(/assets/media/images/logos/NE.png) center no-repeat;
+    */--primaryColor:#0C2340;
+    --secondaryColor:#C8102E;
+    --tertiaryColor: #B0B7BC;
+}
+
+.NO {
+    /*background #D3BC8D url(/assets/media/images/logos/NO.png) center no-repeat;
+    */--primaryColor:#D3BC8D;
+    --secondaryColor:#FFFFFF;
+    --tertiaryColor: #00000;
+}
+
+.NYG {
+    /*background#0B2265 url(/assets/media/images/logos/NYG.png) center no-repeat;
+    */--primaryColor:#0B2265;
+    --secondaryColor:#A71930;
+    --tertiaryColor: #FFFFFF;
+}
+
+.NYJ {
+    /*background#115740 url(/assets/media/images/logos/NYJ.png) center no-repeat;
+    */--primaryColor:#115740;
+    --secondaryColor:white;
+}
+
+.OAK {
+    /*background#000000 url(/assets/media/images/logos/OAK.png) center no-repeat;
+    */--primaryColor:#A5ACAF;
+    --secondaryColor:#000000;
+    --tertiaryColor: #FFFFFF;
+}
+
+.LV {
+    /*background#000000 url(/assets/media/images/logos/OAK.png) center no-repeat;
+    */--primaryColor:#A5ACAF;
+    --secondaryColor:#000000;
+    --tertiaryColor: #FFFFFF;
+}
+
+.PHI {
+    /*background#004c54 url(/assets/media/images/logos/PHI.png) center no-repeat;
+    */--primaryColor:#004c54;
+    --secondaryColor:#A5ACAF;
+    --tertiaryColor: #000000;
+}
+
+.PIT {
+    /*background#FFB612 url(/assets/media/images/logos/PIT.png) center no-repeat;
+    */--primaryColor:#000000;
+    --secondaryColor:#FFB612;
+    --tertiaryColor: #FFFFFF;
+}
+
+.SF {
+    /*background#AA0000 url(/assets/media/images/logos/SF.png) center no-repeat;
+    */--primaryColor:#AA0000;
+    --secondaryColor:#B39950;
+    --tertiaryColor: #FFFFFF;
+}
+
+.SEA {
+    /*background#002244 url(/assets/media/images/logos/SEA.png) center no-repeat;
+    */--primaryColor:#002244;
+    --secondaryColor:#69BE28;
+    --tertiaryColor: #A5ACAF;
+}
+
+.TB {
+    /*background#A71930 url(/assets/media/images/logos/TB.png) center no-repeat;
+    */--primaryColor:#A71930;
+    --secondaryColor:#322F2B;
+    --tertiaryColor: #DC4405;
+}
+
+.TEN {
+    /*background#002244 url(/assets/media/images/logos/TEN.png) center no-repeat;
+    */--primaryColor:#002244;
+    --secondaryColor:#4B92DB;
+    --tertiaryColor: #C60C30;
+}
+
+.WAS {
+    /*background#5A1414 url(/assets/media/images/logos/WAS.png) center no-repeat;
+    */--primaryColor:#5A1414;
+    --secondaryColor:#FFB612;
+    --tertiaryColor: #FFFFFF;
+}
