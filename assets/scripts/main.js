@@ -35,4 +35,10 @@ function toggleNav(){
 function changeTheme(){
   var clubClass = $("#themeSelect").val();
   $("body")[0].classList=clubClass;
+  $("#themeSwitch")[0].checked =false;
+}
+
+function toggleTheme(){
+
+    $("body").toggleClass("alt");
 }

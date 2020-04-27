@@ -9,11 +9,11 @@
     <body>
         <div id="app" class="container">
             <div>
-                <div class="actionIcon" onclick="toggleNav()">&#9776;</a>
+                <div class="actionIcon" style="position:absolute;top:5%;left:3%;" onclick="toggleNav()">&#9776;</a>
             </div>
             <div id="nav" class="overlay">
                 <div>
-                    <div style="width: 45%;display: inline-block;text-align:left">
+                    <div style="width: 45%;display: inline-block;text-align:left;padding:20px">
                         <div class="actionIcon" onclick="toggleNav()">&times;</div>
                     </div>
                     <div id="fullscreenButton" class="fullscreen" style="text-align: right;width: 45%; display: inline-block;">
@@ -23,6 +23,7 @@
                     <div class="navMenuRow">
                         <strong>Theme: </strong>
                         <select id="themeSelect" onchange="changeTheme()">
+                            <option value="None">None</option>
                             <option value="ARZ">ARZ</option>
                             <option value="ATL">ATL</option>
                             <option value="BLT">BLT</option>
@@ -56,6 +57,10 @@
                             <option value="TEN">TEN</option>
                             <option value="WAS">WAS</option>                       
                         </select>
+                        <label class="switch">
+                            <input id="themeSwitch" type="checkbox" onchange="toggleTheme()">
+                            <span class="slider"></span>
+                          </label>
                     </div>
                 </div>          
                 
@@ -65,6 +70,10 @@
                     <input id="timerValueSecond" type="text" placeholder="Seconds..."/>
                     <input id="timerValueLabel" type="text" placeholder="Label"/>
                     <button id="btnStartTimer" class="timerbutton" onclick="startTimer()">Add Timer +</button>
+                </div>
+                <div id="addStopWatchOptions" class="navMenuRow">
+                    <input id="stopwatchValueLabel" type="text" placeholder="Label"/>
+                    <button id="btnStartStopWatch" class="timerbutton" onclick="startStopWatch()">Add Stopwatch +</button>
                 </div>
             </div>
             <div id="presentationClock">
@@ -87,6 +96,7 @@
                 </div>
 
                 <script src="./assets/scripts/countdownTimer.js"></script>
+                <script src="./assets/scripts/stopwatch.js"></script>
             </div>
         </div>
     </body>

@@ -40,7 +40,7 @@ function setTime(){
     updateNotifications();
 }
 function startPresentationTimer(){
-    setInterval(setTime, 300);
+    setInterval(setTime, 200);
 }
 function updateNotifications(){
     var notifications = document.getElementById("notifications");  

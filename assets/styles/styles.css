@@ -39,6 +39,24 @@ body{
     background-color: var(--secondaryColor);
 }
 
+body.alt{
+    color:var(--secondaryColor);
+    background-color: var(--primaryColor);
+}
+
+#app{
+    background-color: var(--secondaryColor);
+    color: var(--primaryColor);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+body.alt #app{
+    color:var(--secondaryColor);
+    background-color: var(--primaryColor);
+}
+
 @font-face {
     font-family: endzone;
     src: url(../media/fonts/EndzoneSans-Medium.otf);
@@ -47,6 +65,9 @@ body{
 #app{
     background-color: var(--secondaryColor);
     color: var(--primaryColor);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .timeSection{
@@ -54,7 +75,7 @@ body{
     text-align: center;
     font-size: 10vw;
 }
-#timerValueLabel{
+#timerValueLabel,#stopwatchValueLabel{
     width: 175px;
     height: 55px;
     font-size: 2.5vw;
@@ -66,9 +87,9 @@ body{
 }
 
 
-#btnStartTimer{
+#btnStartTimer,#btnStartStopWatch{
     background: none;
-    width: 175px;
+    width: 250px;
     font-size: 28px;
     height: 60px;
     vertical-align: bottom;
@@ -76,17 +97,19 @@ body{
     border-color: var(--primaryColor);
     border: 1px solid;
 }
+
 .buttons{
-    float:right;
+    text-align:center;
 }
 .buttons i{
-    display: block;
-    font-size: 2.5vw;
+    display:inline-block;
+    font-size:2.5vw;
+    padding:0 1vw;
 }
 .timer{
-    width: 21vw;
+    width: 23vw;
     display: inline-block;
-    margin:5vw;
+    margin:3vw;
 }
 .timerLabel{
     text-align: center;
@@ -144,7 +167,7 @@ body{
   }
 
   .actionIcon{
-      font-size:3vw;
+      font-size:5vw;
       text-decoration: none;
   }
 
@@ -157,13 +180,14 @@ body{
       width:14vw;
   }
 
-  #addTimerOptions{
+  #addTimerOptions,#addStopWatchOptions{
       text-align: center;
   }
 
   .timerValues{
-    width: 80%;
-    display: inline-block;
+    width:100%;
+    display:inline-block;
+    text-align:center;
   }
 
   .invisible{
@@ -173,10 +197,65 @@ body{
   .navMenuRow{
       width:100%;
       text-align:center;
-      margin:10px;
+      margin:15px;
   }
 
   #themeSelect{
     min-width:50px;
     padding:10px;
   }
+
+  /* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: -10px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  

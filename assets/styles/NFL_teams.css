@@ -1,3 +1,7 @@
+.None{
+    --primaryColor:rgb(100,100,100);
+    --secondaryColor:white;
+}
 .NFL{
     /*background#013369 url(/assets/media/images/logos/NFL.png) center no-repeat;
     */--primaryColor:#013369;
