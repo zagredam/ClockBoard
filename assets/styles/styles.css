@@ -177,7 +177,8 @@ body.alt #app{
   }
 
   #clockSecond{
-      width:14vw;
+    width: 12vw;
+    text-align: left;
   }
 
   #addTimerOptions,#addStopWatchOptions{

@@ -30,8 +30,8 @@ function setTime(){
     var seconds = d.getSeconds();
     document.getElementById("clockMeridium").innerText = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
-    document.getElementById("clockHour").innerHTML =  (hours ? hours : 12) +"&colon;"; // the hour '0' should be '12'
-    document.getElementById("clockMinute").innerHTML = (minutes < 10 ? '0'+minutes : minutes) +"&colon;";
+    document.getElementById("clockHour").innerHTML =  (hours ? hours : 12) +"&nbsp;&colon;"; // the hour '0' should be '12'
+    document.getElementById("clockMinute").innerHTML = (minutes < 10 ? '0'+minutes : minutes) +"&nbsp;&colon;";
     document.getElementById("clockSecond").innerHTML = (seconds < 10 ? '0'+seconds : seconds) ;
     if(d.getDay() != currentTime.getDay()){
       currentTime = new Date();
