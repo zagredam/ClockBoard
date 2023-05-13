@@ -64,7 +64,7 @@
                     </div>
                 </div>          
                 
-                <div id="addTimerOptions" class="navMenuRow">
+                <div id="addTimerOptions" class="navMenuRow" style="font-size: 2vw;">
                     <input id="timerValueMinute" type="text" placeholder="Minutes..."/>
                     :
                     <input id="timerValueSecond" type="text" placeholder="Seconds..."/>
@@ -82,6 +82,7 @@
                     <div id="clockMinute" class="timeSection"></div>
                     <div id="clockSecond" class="timeSection"></div>
                     <div id="clockMeridium" class="timeSection"></div>
+                    <!-- <div id="timevalue" class="timeSection"></div> -->
                 </div>
                 <div id="dateContent" class="notifications">
                 </div>
@@ -101,6 +102,26 @@
         </div>
     </body>
     <script src="./assets/scripts/main.js"></script>
+    <script src="./assets/scripts/GamepadService.js"></script>
+    <script>
+        var x = new GamepadService();
+        x.addPressedEvent(1,()=>{$("#themeSwitch").prop("checked",!$("#themeSwitch").prop("checked"));toggleTheme();})
+        x.addPressedEvent(2,()=>{startStopWatch();})
+        x.addPressedEvent(4,()=>{
+            const selectedIndex = $("#themeSelect").prop('selectedIndex');
+            $("#themeSelect").prop('selectedIndex', selectedIndex === 0 ? 32: selectedIndex - 1);
+            changeTheme();
+        })
+        
+        x.addPressedEvent(5,()=>{
+            const selectedIndex = $("#themeSelect").prop('selectedIndex');
+            $("#themeSelect").prop('selectedIndex', selectedIndex === 32 ? 0 : selectedIndex + 1);
+            changeTheme();
+        })
+        x.addHeldEvent(3,(interval)=>{if(interval > 1000)window.location.href= "https://michaelzagreda.com/Apps/Dashboard/index.html"});
+        x.addPressedEvent(7,closeFullscreen);
+        x.addPressedEvent(8,makeFullscreen);
+    </script>
     <link rel="stylesheet" href="./assets/styles/styles.css">
     <link rel="stylesheet" href="./assets/styles/NFL_teams.css">
 </html>

@@ -10,8 +10,9 @@ function startTimer(){
 //   }
   var numMinutes = document.getElementById("timerValueMinute").value;
   var numSeconds = document.getElementById("timerValueSecond").value;
+  if((numMinutes === "" && numSeconds === "") || isNaN(numMinutes) || isNaN(numSeconds)) return;
   var timeToCountdownEnd = new Date();
-  timerSection.innerHTML += '<div class="timer" index="'+countDowns.length+'"><div class="timerValues"><div class="timeSection timerHour"></div><div class="timeSection timerMinute"></div> <div class="timeSection timerSecond"></div></div><div class="timerLabel">'+document.getElementById("timerValueLabel").value+'</div><div class="buttons"><i class="fas fa-undo-alt resetTimer" onclick="resetTimer(this)"></i><i class="far fa-window-close closeTimer" onclick="closeTimer(this)"></i><i class="fas fa-pause closeTimer" onclick="toggleTimer(this)"></i></div></div>';
+  timerSection.innerHTML += '<div class="timer" index="'+countDowns.length+'"><div class="timerValues"><div class="timeSection timerHour"></div><div class="timeSection timerMinute"></div> <div class="timeSection timerSecond"></div></div><div class="timerLabel">'+document.getElementById("timerValueLabel").value+'</div><div class="buttons"><i class="fas fa-undo-alt actionIcon  resetTimer" onclick="resetTimer(this)"></i><i class="far fa-window-close actionIcon  closeTimer" onclick="closeTimer(this)"></i><i class="fas fa-pause closeTimer actionIcon " onclick="toggleTimer(this)"></i></div></div>';
   
   countDowns.push({paused:false,active:true,timerValue:(60*1000*(numMinutes||0)) + (1000*(numSeconds||0)),timeToExp:new Date(timeToCountdownEnd.getTime() + (60*1000*(numMinutes||0)) + (1000*(numSeconds||0)))});
   document.getElementById("timerValueMinute").value = "";

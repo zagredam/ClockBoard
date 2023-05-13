@@ -33,6 +33,7 @@ function setTime(){
     document.getElementById("clockHour").innerHTML =  (hours ? hours : 12) +"&nbsp;&colon;"; // the hour '0' should be '12'
     document.getElementById("clockMinute").innerHTML = (minutes < 10 ? '0'+minutes : minutes) +"&nbsp;&colon;";
     document.getElementById("clockSecond").innerHTML = (seconds < 10 ? '0'+seconds : seconds) ;
+    // document.getElementById("timevalue").innerText=`${(hours ? hours : 12)} :${(minutes < 10 ? '0'+minutes : minutes) } : ${("clockSecond").innerHTML = (seconds < 10 ? '0'+seconds : seconds) } ${hours >= 12 ? 'pm' : 'am'}`;
     if(d.getDay() != currentTime.getDay()){
       currentTime = new Date();
       document.getElementById("dateContent").innerText = WeekDay[currentTime.getDay()].Full+", "+Month[currentTime.getMonth()].Full+ " "+currentTime.getDate() +", "+currentTime.getFullYear();

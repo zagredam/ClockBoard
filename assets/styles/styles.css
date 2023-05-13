@@ -169,6 +169,7 @@ body.alt #app{
   .actionIcon{
       font-size:5vw;
       text-decoration: none;
+      cursor: pointer;
   }
 
   #dateContent{
@@ -260,3 +261,10 @@ body.alt #app{
     transform: translateX(26px);
   }
   
+  .timerbutton{
+    cursor: pointer;
+  }
+
+  html{
+    cursor: default;
+  }

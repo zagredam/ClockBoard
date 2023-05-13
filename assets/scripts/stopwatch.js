@@ -6,7 +6,7 @@ var timerIndex = 0;
 const stopWatchIntervalTime = 200;
 function startStopWatch(){
   var timeToCountdownEnd = new Date();
-  timerSection.innerHTML += '<div class="timer" sindex="'+stopWatches.length+'"><div class="timerValues"><div class="timeSection timerHour"></div><div class="timeSection timerMinute"></div> <div class="timeSection timerSecond"></div></div><div class="timerLabel">'+document.getElementById("stopwatchValueLabel").value+'</div><div class="buttons"><i class="fas fa-undo-alt resetTimer" onclick="resetStopWatch(this)"></i><i class="far fa-window-close closeTimer" onclick="closeStopWatch(this)"></i><i class="fas fa-pause closeTimer" onclick="toggleStopWatch(this)"></i></div></div>';
+  timerSection.innerHTML += '<div class="timer" sindex="'+stopWatches.length+'"><div class="timerValues"><div class="timeSection timerHour"></div><div class="timeSection timerMinute"></div> <div class="timeSection timerSecond"></div></div><div class="timerLabel">'+document.getElementById("stopwatchValueLabel").value+'</div><div class="buttons"><i class="fas fa-undo-alt resetTimer actionIcon " onclick="resetStopWatch(this)"></i><i class="far fa-window-close closeTimer actionIcon " onclick="closeStopWatch(this)"></i><i class="fas fa-pause closeTimer actionIcon " onclick="toggleStopWatch(this)"></i></div></div>';
   
   stopWatches.push({paused:false,active:true,milisecondsFromStart:0});
   document.getElementById("timerValueMinute").value = "";
