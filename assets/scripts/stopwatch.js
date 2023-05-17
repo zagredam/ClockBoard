@@ -33,6 +33,15 @@ function resetStopWatch(e){
     var timersIndex = $(e).parent().parent().attr("sindex");
     stopWatches[timersIndex].milisecondsFromStart = 0;
 }
+
+function resetStopWatchByIndex(stopWatchIndex){
+    stopWatches[stopWatchIndex].milisecondsFromStart = 0;
+}
+
+function closeStopWatchByIndex(stopWatchIndex){
+    stopWatches[stopWatchIndex].active = false;
+    $(".timer[sindex="+stopWatchIndex+"]").css("display","none");
+}
   
 
 function updateCountdownValue(){

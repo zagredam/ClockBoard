@@ -105,8 +105,13 @@
     <script src="./assets/scripts/GamepadService.js"></script>
     <script>
         var x = new GamepadService();
+        var totalStopwatchCount = 0;
+        x.enableControlls();
+        x.addPressedEvent(0,()=>{})
         x.addPressedEvent(1,()=>{$("#themeSwitch").prop("checked",!$("#themeSwitch").prop("checked"));toggleTheme();})
         x.addPressedEvent(2,()=>{startStopWatch();})
+        x.addHeldEvent(6,(interval)=>{if(interval > 1000)resetStopWatchByIndex(totalStopwatchCount)});
+        x.addHeldEvent(7,(interval)=>{if(interval > 1000){closeStopWatchByIndex(totalStopwatchCount);totalStopwatchCount++;}});
         x.addPressedEvent(4,()=>{
             const selectedIndex = $("#themeSelect").prop('selectedIndex');
             $("#themeSelect").prop('selectedIndex', selectedIndex === 0 ? 32: selectedIndex - 1);
@@ -119,8 +124,8 @@
             changeTheme();
         })
         x.addHeldEvent(3,(interval)=>{if(interval > 1000)window.location.href= "https://michaelzagreda.com/Apps/Dashboard/index.html"});
-        x.addPressedEvent(7,closeFullscreen);
-        x.addPressedEvent(8,makeFullscreen);
+        // x.addPressedEvent(7,closeFullscreen);
+        // x.addPressedEvent(8,makeFullscreen);
     </script>
     <link rel="stylesheet" href="./assets/styles/styles.css">
     <link rel="stylesheet" href="./assets/styles/NFL_teams.css">
