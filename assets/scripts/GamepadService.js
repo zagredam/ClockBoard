@@ -4,7 +4,7 @@ class GamepadService{
     yaxisThreshold = .4;
 
     gamePadInterval = null;
-    gamePadIntervalRate = 50;
+    gamePadIntervalRate = 200;
 
         //buttons are a two dimensional array for dynamic button counts
     buttonsPressed = new Array(20);
