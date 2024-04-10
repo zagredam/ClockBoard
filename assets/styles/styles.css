@@ -70,10 +70,26 @@ body.alt #app{
     justify-content:center;
 }
 
-.timeSection{
+.timeSection,.colonDelimiter{
     display:inline-block;
     text-align: center;
-    font-size: 10vw;
+    font-size: 14vw;
+}
+#clockMeridium{
+  font-size: 8vw;
+  position: relative;
+  top: -25px;
+}
+#clockSecond,#clockMinute{
+  width:16vw;
+}
+.colonDelimiter{
+  position:relative;
+  top:-18px;
+  width:3vw;
+}
+#clockHour{
+  text-align: right;
 }
 #timerValueLabel,#stopwatchValueLabel{
     width: 175px;
@@ -177,10 +193,7 @@ body.alt #app{
       text-align: center;
   }
 
-  #clockSecond{
-    width: 12vw;
-    text-align: left;
-  }
+  
 
   #addTimerOptions,#addStopWatchOptions{
       text-align: center;
@@ -267,4 +280,9 @@ body.alt #app{
 
   html{
     cursor: default;
+  }
+
+  .MZ{
+    --primaryColor:#005A43;
+    --secondaryColor:#c7924c;
   }
