@@ -80,8 +80,8 @@ body.alt #app{
   position: relative;
   top: -25px;
 }
-#clockSecond,#clockMinute{
-  width:16vw;
+#clockHourDigit1,#clockHourDigit2,#clockMinuteDigit1,#clockMinuteDigit2,#clockSecondDigit1,#clockSecondDigit2{
+  width:7vw;
 }
 .colonDelimiter{
   position:relative;
@@ -285,4 +285,12 @@ body.alt #app{
   .MZ{
     --primaryColor:#005A43;
     --secondaryColor:#c7924c;
+  }
+
+  #mainNavIcon{
+    transition: opacity 1s ease-in-out ;
+    opacity:0;
+  }
+  #mainNavIcon.show{
+    opacity:1;
   }

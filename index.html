@@ -9,7 +9,7 @@
     <body>
         <div id="app" class="container">
             <div>
-                <div class="actionIcon" style="position:absolute;top:5%;left:3%;" onclick="toggleNav()">&#9776;</a>
+                <div id="mainNavIcon" class="actionIcon" style="position:absolute;top:5%;left:3%;" onclick="toggleNav()">&#9776;</a>
             </div>
             <div id="nav" class="overlay">
                 <div>
@@ -64,7 +64,27 @@
                           </label>
                     </div>
                 </div>          
-                
+                <div class="navMenuRow">
+                    <strong>Date: </strong>
+                    <label class="switch">
+                        <input id="themeSwitch" type="checkbox" onchange="toggleDate()">
+                        <span class="slider"></span>
+                    </label>
+                </div>          
+                <div class="navMenuRow">
+                    <strong>Seconds: </strong>
+                    <label class="switch">
+                        <input id="secondSwitch" type="checkbox" onchange="toggleSeconds()">
+                        <span class="slider"></span>
+                    </label>
+                </div>          
+                <div class="navMenuRow">
+                    <strong>Meridum: </strong>
+                    <label class="switch">
+                        <input id="meridumSwitch" type="checkbox" onchange="toggleMeridum()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
                 <div id="addTimerOptions" class="navMenuRow" style="font-size: 2vw;">
                     <input id="timerValueMinute" type="text" placeholder="Minutes..."/>
                     :
@@ -79,11 +99,16 @@
             </div>
             <div id="presentationClock">
                 <div class="time">
-                    <div id="clockHour" class="timeSection"></div>
+                    <div id="clockHourDigit1" class="timeSection"></div>
+                    <div id="clockHourDigit2" class="timeSection"></div>
                     <div class="colonDelimiter">:</div>
-                    <div id="clockMinute" class="timeSection"></div>
+                    <div id="clockMinuteDigit1" class="timeSection"></div>
+                    <div id="clockMinuteDigit2" class="timeSection"></div>
+                    <span id="secondsSpan">
                     <div class="colonDelimiter">:</div>
-                    <div id="clockSecond" class="timeSection"></div>
+                    <div id="clockSecondDigit1" class="timeSection"></div>
+                    <div id="clockSecondDigit2" class="timeSection"></div>
+                    </span>
                     <div id="clockMeridium" class="timeSection"></div>
                     <!-- <div id="timevalue" class="timeSection"></div> -->
                 </div>
