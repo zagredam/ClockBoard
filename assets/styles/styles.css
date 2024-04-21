@@ -295,3 +295,9 @@ body.alt #app{
   #mainNavIcon.show,#fullscreenButton.show,.buttons.show{
     opacity:1;
   }
+
+  #timersSection{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
