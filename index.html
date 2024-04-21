@@ -16,10 +16,7 @@
                     <div style="width: 45%;display: inline-block;text-align:left;padding:20px">
                         <div class="actionIcon" onclick="toggleNav()">&times;</div>
                     </div>
-                    <div id="fullscreenButton" class="fullscreen" style="text-align: right;width: 45%; display: inline-block;">
-                        <i id="fullscreen-open" onclick="makeFullscreen()" class="fas fa-expand actionIcon"></i>
-                        <i id="fullscreen-close" style="display: none" onclick="closeFullscreen()" class="fas fa-compress actionIcon"></i>
-                    </div>
+                    
                     <div class="navMenuRow">
                         <strong>Theme: </strong>
                         <select id="themeSelect" onchange="changeTheme()">
@@ -96,6 +93,10 @@
                     <input id="stopwatchValueLabel" type="text" placeholder="Label"/>
                     <button id="btnStartStopWatch" class="timerbutton" onclick="startStopWatch()">Add Stopwatch +</button>
                 </div>
+            </div>
+            <div id="fullscreenButton" class="fullscreen" style="text-align: right;width: 45%; display: inline-block;">
+                <i id="fullscreen-open" onclick="makeFullscreen()" class="fas fa-expand actionIcon"></i>
+                <i id="fullscreen-close" style="display: none" onclick="closeFullscreen()" class="fas fa-compress actionIcon"></i>
             </div>
             <div id="presentationClock">
                 <div class="time">

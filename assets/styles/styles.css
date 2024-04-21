@@ -29,8 +29,9 @@
 
 #fullscreenButton{
     position: static;
-    right:0;
-    top:0;
+    top: 5vh;
+    right: 5vw;
+    position: absolute;
 }
 
 body{
@@ -287,10 +288,10 @@ body.alt #app{
     --secondaryColor:#c7924c;
   }
 
-  #mainNavIcon{
+  #mainNavIcon,#fullscreenButton,.buttons{
     transition: opacity 1s ease-in-out ;
     opacity:0;
   }
-  #mainNavIcon.show{
+  #mainNavIcon.show,#fullscreenButton.show,.buttons.show{
     opacity:1;
   }

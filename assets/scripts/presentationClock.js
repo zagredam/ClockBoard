@@ -100,7 +100,11 @@ function updateNotifications(){
   document.addEventListener("mousemove",()=>{
     if(HIDENAVTIMEOUT != null) clearTimeout(HIDENAVTIMEOUT);
     document.getElementById("mainNavIcon").classList.add("show");
+    document.getElementById("fullscreenButton").classList.add("show");
+    Array.from(document.getElementsByClassName("buttons")).forEach(b => b.classList.add("show"));
     HIDENAVTIMEOUT = setTimeout(()=>{
       document.getElementById("mainNavIcon").classList.remove("show");
+      document.getElementById("fullscreenButton").classList.remove("show");
+      Array.from(document.getElementsByClassName("buttons")).forEach(b => b.classList.remove("show"));
     },2000)
   })
