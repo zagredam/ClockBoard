@@ -83,4 +83,4 @@ function flashZero(index){
     
   
 }
-setInterval(updateCountdownValue,1000);
+setInterval(updateCountdownValue,200);

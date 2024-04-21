@@ -3,7 +3,7 @@ var updateInterval = null;
 var flashZeroInterval = null;
 var timerSection = document.getElementById("timersSection");
 var timerIndex = 0;
-const stopWatchIntervalTime = 1000;
+const stopWatchIntervalTime = 200;
 function startStopWatch(){
   var timeToCountdownEnd = new Date();
   timerSection.innerHTML += '<div class="timer" sindex="'+stopWatches.length+'"><div class="timerValues"><div class="timeSection timerHour"></div><div class="timeSection timerMinute">00:</div> <div class="timeSection timerSecond">00</div></div><div class="timerLabel">'+document.getElementById("stopwatchValueLabel").value+'</div><div class="buttons"><i class="fas fa-undo-alt resetTimer actionIcon " onclick="resetStopWatch(this)"></i><i class="far fa-window-close closeTimer actionIcon " onclick="closeStopWatch(this)"></i><i class="fas fa-pause closeTimer actionIcon " onclick="toggleStopWatch(this)"></i></div></div>';
