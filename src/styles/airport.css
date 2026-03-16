@@ -1,0 +1,144 @@
+/* ── Airport flip-board clock ──────────────────────────────── */
+
+.airport-bg {
+  --dw: min(18vw, 55vh);    /* digit card width; height = dw * 3/2 via aspect-ratio */
+
+  width: 97vw;
+  height: 97vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d0d;
+  overflow: hidden;
+}
+
+.airport-clock {
+  display: flex;
+  align-items: center;
+  gap: min(1.2vw, 2.5vh);
+}
+
+/* ── Digit card ─────────────────────────────────────────────── */
+
+.fd-wrap {
+  position: relative;
+  width: var(--dw);
+  aspect-ratio: 2 / 3;
+  border-radius: max(3px, min(0.4vw, 1vh));
+  perspective: 700px;
+  perspective-origin: 50% 50%;
+}
+
+/* Shared base for static halves and animated leaves */
+.fd-half,
+.fd-leaf {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+}
+
+.fd-top  { top: 0; }
+.fd-bottom { bottom: 0; }
+
+/* Static halves */
+.fd-half {
+  background: #1e1e1e;
+}
+.fd-half.fd-top {
+  border-radius: max(3px, min(0.4vw, 1vh)) max(3px, min(0.4vw, 1vh)) 0 0;
+  border-bottom: max(1px, min(0.2vw, 0.5vh)) solid #000;
+  background: #242424;
+}
+.fd-half.fd-bottom {
+  border-radius: 0 0 max(3px, min(0.4vw, 1vh)) max(3px, min(0.4vw, 1vh));
+  background: #1a1a1a;
+}
+
+/* Animated leaves */
+.fd-leaf {
+  z-index: 4;
+  background: inherit;
+}
+.fd-leaf.fd-top {
+  transform-origin: bottom center;
+  border-radius: max(3px, min(0.4vw, 1vh)) max(3px, min(0.4vw, 1vh)) 0 0;
+  border-bottom: max(1px, min(0.2vw, 0.5vh)) solid #000;
+  background: #2a2a2a;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+}
+.fd-leaf.fd-bottom {
+  transform-origin: top center;
+  transform: rotateX(90deg);
+  border-radius: 0 0 max(3px, min(0.4vw, 1vh)) max(3px, min(0.4vw, 1vh));
+  background: #202020;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* ── Digit text inside each half ───────────────────────────── */
+/*
+  .fd-inner is 200% the height of its .fd-half/.fd-leaf parent
+  = 100% of the full card height. The digit is centered in this
+  full-height space; each half's overflow:hidden clips to its half.
+*/
+.fd-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: calc(var(--dw) * 1.15);
+  font-weight: 700;
+  color: #f0d020;
+  line-height: 1;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+
+.fd-top  .fd-inner { top: 0; }
+.fd-bottom .fd-inner { bottom: 0; }
+
+/* ── Flip animations ────────────────────────────────────────── */
+
+.fd-fold-anim {
+  animation: fd-fold 0.2s ease-in forwards;
+}
+
+@keyframes fd-fold {
+  from { transform: rotateX(0deg); }
+  to   { transform: rotateX(-90deg); }
+}
+
+.fd-unfold-anim {
+  animation: fd-unfold 0.22s ease-out forwards;
+}
+
+@keyframes fd-unfold {
+  from { transform: rotateX(90deg); }
+  to   { transform: rotateX(0deg); }
+}
+
+/* ── HH:MM separator ────────────────────────────────────────── */
+
+.airport-sep {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: calc(var(--dw) * 0.75);
+  font-weight: 700;
+  color: #f0d020;
+  line-height: 1;
+  padding: 0 calc(var(--dw) * 0.08);
+  user-select: none;
+  animation: sep-blink 1s step-end infinite;
+  /* push the colon up slightly to optically center between halves */
+  position: relative;
+  top: calc(var(--dw) * -0.05);
+}
+
+@keyframes sep-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.15; }
+}
