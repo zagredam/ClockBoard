@@ -1,6 +1,9 @@
 :root{
     --primaryColor:rgb(100,100,100);
     --secondaryColor:white;
+
+  isolation: isolate;
+
 }
 
 .container{
@@ -40,6 +43,7 @@ body{
     background-color: var(--secondaryColor);
 }
 
+
 body.alt{
     color:var(--secondaryColor);
     background-color: var(--primaryColor);
@@ -74,10 +78,10 @@ body.alt #app{
 .timeSection,.colonDelimiter{
     display:inline-block;
     text-align: center;
-    font-size: 14vw;
+    /* font-size: 14vw; */
 }
 #clockMeridium{
-  font-size: 8vw;
+/*   font-size: 8vw; */
   position: relative;
   top: -25px;
 }
