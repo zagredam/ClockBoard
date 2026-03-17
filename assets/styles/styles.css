@@ -7,9 +7,12 @@
 }
 
 .container{
-    margin:auto auto;
-    height:90vh;
-    width:95vw;
+    height:100vh;
+    width:100vw;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
 }
 
 .time{
@@ -55,6 +58,7 @@ body.alt{
     display:flex;
     align-items:center;
     justify-content:center;
+    min-height:100vh;
 }
 
 body.alt #app{
@@ -66,19 +70,11 @@ body.alt #app{
     font-family: endzone;
     src: url(../media/fonts/EndzoneSans-Medium.otf);
   }
-  
-#app{
-    background-color: var(--secondaryColor);
-    color: var(--primaryColor);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
 
 .timeSection,.colonDelimiter{
     display:inline-block;
     text-align: center;
-    /* font-size: 14vw; */
+    font-size: calc(14vw * 1.15)
 }
 #clockMeridium{
 /*   font-size: 8vw; */
@@ -86,7 +82,7 @@ body.alt #app{
   top: -25px;
 }
 #clockHourDigit1,#clockHourDigit2,#clockMinuteDigit1,#clockMinuteDigit2,#clockSecondDigit1,#clockSecondDigit2{
-  width:7vw;
+  width:14vw;
 }
 .colonDelimiter{
   position:relative;
@@ -304,4 +300,11 @@ body.alt #app{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  #presentationClock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }

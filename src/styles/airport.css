@@ -102,6 +102,10 @@ body{
   letter-spacing: -0.02em;
 }
 
+body.alt .fd-inner{
+    color:var(--secondaryColor);
+}
+
 .fd-top  .fd-inner { top: 0; }
 .fd-bottom .fd-inner { bottom: 0; }
 
@@ -140,6 +144,11 @@ body{
   position: relative;
   top: calc(var(--dw) * -0.05);
 }
+
+body.alt .airport-sep{
+    color:var(--secondaryColor);
+}
+
 
 @keyframes sep-blink {
   0%, 100% { opacity: 1; }
