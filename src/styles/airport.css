@@ -1,10 +1,12 @@
 /* ── Airport flip-board clock ──────────────────────────────── */
-
+body{
+  margin:0;
+}
 .airport-bg {
-  --dw: min(18vw, 55vh);    /* digit card width; height = dw * 3/2 via aspect-ratio */
+ 
 
-  width: 97vw;
-  height: 97vh;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,10 +92,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Courier New', Courier, monospace;
+  /* font-family: 'Courier New', Courier, monospace; */
   font-size: calc(var(--dw) * 1.15);
   font-weight: 700;
-  color: #f0d020;
+  color: var(--primaryColor);
+  /* #f0d020; */
   line-height: 1;
   user-select: none;
   letter-spacing: -0.02em;
@@ -128,11 +131,11 @@
   font-family: 'Courier New', Courier, monospace;
   font-size: calc(var(--dw) * 0.75);
   font-weight: 700;
-  color: #f0d020;
+  color: var(--primaryColor);
   line-height: 1;
   padding: 0 calc(var(--dw) * 0.08);
   user-select: none;
-  animation: sep-blink 1s step-end infinite;
+  animation: sep-blink 1.5s step-end infinite;
   /* push the colon up slightly to optically center between halves */
   position: relative;
   top: calc(var(--dw) * -0.05);

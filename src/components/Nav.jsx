@@ -1,28 +1,15 @@
 import { useState } from 'react'
+import { NFL_TEAMS, useSettings } from '../context/SettingsContext'
 
-const NFL_TEAMS = [
-  'None', 'MZ', 'ARZ', 'ATL', 'BLT', 'BUF', 'CAR', 'CHI', 'CIN', 'CLV',
-  'DAL', 'DEN', 'DET', 'GB', 'HST', 'IND', 'JAX', 'KC', 'LAC', 'LA',
-  'MIA', 'MIN', 'NE', 'NO', 'NYG', 'NYJ', 'LV', 'PHI', 'PIT', 'SF',
-  'SEA', 'TB', 'TEN', 'WAS',
-]
+export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
+  const {
+    theme, setTheme,
+    altTheme, setAltTheme,
+    showDate, setShowDate,
+    showSeconds, setShowSeconds,
+    showMeridum, setShowMeridum,
+  } = useSettings()
 
-export default function Nav({
-  isOpen,
-  onClose,
-  theme,
-  onThemeChange,
-  altTheme,
-  onAltThemeToggle,
-  showDate,
-  onDateToggle,
-  showSeconds,
-  onSecondsToggle,
-  showMeridum,
-  onMeridumToggle,
-  onAddTimer,
-  onAddStopwatch,
-}) {
   const [timerMinutes, setTimerMinutes] = useState('')
   const [timerSeconds, setTimerSeconds] = useState('')
   const [timerLabel, setTimerLabel] = useState('')
@@ -36,6 +23,11 @@ export default function Nav({
     onAddStopwatch(stopwatchLabel)
   }
 
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme)
+    setAltTheme(false)
+  }
+
   return (
     <div id="nav" className={`overlay${isOpen ? ' show' : ''}`}>
       <div>
@@ -44,13 +36,13 @@ export default function Nav({
         </div>
         <div className="navMenuRow">
           <strong>Theme: </strong>
-          <select id="themeSelect" value={theme} onChange={(e) => onThemeChange(e.target.value)}>
+          <select id="themeSelect" value={theme} onChange={(e) => handleThemeChange(e.target.value)}>
             {NFL_TEAMS.map((t) => (
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
           <label className="switch">
-            <input type="checkbox" checked={altTheme} onChange={onAltThemeToggle} />
+            <input type="checkbox" checked={altTheme} onChange={() => setAltTheme(!altTheme)} />
             <span className="slider"></span>
           </label>
         </div>
@@ -58,63 +50,67 @@ export default function Nav({
       <div className="navMenuRow">
         <strong>Date: </strong>
         <label className="switch">
-          <input type="checkbox" checked={showDate} onChange={onDateToggle} />
+          <input type="checkbox" checked={showDate} onChange={() => setShowDate(!showDate)} />
           <span className="slider"></span>
         </label>
       </div>
       <div className="navMenuRow">
         <strong>Seconds: </strong>
         <label className="switch">
-          <input type="checkbox" checked={showSeconds} onChange={onSecondsToggle} />
+          <input type="checkbox" checked={showSeconds} onChange={() => setShowSeconds(!showSeconds)} />
           <span className="slider"></span>
         </label>
       </div>
       <div className="navMenuRow">
         <strong>Meridum: </strong>
         <label className="switch">
-          <input type="checkbox" checked={showMeridum} onChange={onMeridumToggle} />
+          <input type="checkbox" checked={showMeridum} onChange={() => setShowMeridum(!showMeridum)} />
           <span className="slider"></span>
         </label>
       </div>
-      <div id="addTimerOptions" className="navMenuRow" style={{ fontSize: '2vw' }}>
-        <input
-          id="timerValueMinute"
-          type="text"
-          placeholder="Minutes..."
-          value={timerMinutes}
-          onChange={(e) => setTimerMinutes(e.target.value)}
-        />
-        :
-        <input
-          id="timerValueSecond"
-          type="text"
-          placeholder="Seconds..."
-          value={timerSeconds}
-          onChange={(e) => setTimerSeconds(e.target.value)}
-        />
-        <input
-          id="timerValueLabel"
-          type="text"
-          placeholder="Label"
-          value={timerLabel}
-          onChange={(e) => setTimerLabel(e.target.value)}
-        />
-        <button id="btnStartTimer" className="timerbutton" onClick={handleAddTimer}>
-          Add Timer +
-        </button>
-      </div>
-      <div id="addStopWatchOptions" className="navMenuRow">
-        <input
-          id="stopwatchValueLabel"
-          type="text"
-          placeholder="Label"
-          value={stopwatchLabel}
-          onChange={(e) => setStopwatchLabel(e.target.value)}
-        />
-        <button id="btnStartStopWatch" className="timerbutton" onClick={handleAddStopwatch}>
-          Add Stopwatch +
-        </button>
-      </div>
+      {onAddTimer && (
+        <div id="addTimerOptions" className="navMenuRow" style={{ fontSize: '2vw' }}>
+          <input
+            id="timerValueMinute"
+            type="text"
+            placeholder="Minutes..."
+            value={timerMinutes}
+            onChange={(e) => setTimerMinutes(e.target.value)}
+          />
+          :
+          <input
+            id="timerValueSecond"
+            type="text"
+            placeholder="Seconds..."
+            value={timerSeconds}
+            onChange={(e) => setTimerSeconds(e.target.value)}
+          />
+          <input
+            id="timerValueLabel"
+            type="text"
+            placeholder="Label"
+            value={timerLabel}
+            onChange={(e) => setTimerLabel(e.target.value)}
+          />
+          <button id="btnStartTimer" className="timerbutton" onClick={handleAddTimer}>
+            Add Timer +
+          </button>
+        </div>
+      )}
+      {onAddStopwatch && (
+        <div id="addStopWatchOptions" className="navMenuRow">
+          <input
+            id="stopwatchValueLabel"
+            type="text"
+            placeholder="Label"
+            value={stopwatchLabel}
+            onChange={(e) => setStopwatchLabel(e.target.value)}
+          />
+          <button id="btnStartStopWatch" className="timerbutton" onClick={handleAddStopwatch}>
+            Add Stopwatch +
+          </button>
+        </div>
+      )}
     </div>
   )
 }
