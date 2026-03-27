@@ -1,0 +1,65 @@
+.hourglass-bg {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--secondaryColor);
+}
+
+body.alt .hourglass-bg{
+    background:var(--primaryColor);
+}
+
+.hourglass-svg {
+  height: min(85vh, 98vw);
+  width: auto;
+  overflow: visible;
+  transition:transform 1.2s;
+}
+
+.hg-sand {
+  fill: var(--primaryColor);
+  opacity: 0.92;
+}
+
+.hg-wall {
+  stroke: var(--primaryColor);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.hg-cap {
+  fill: var(--primaryColor);
+}
+
+.hg-stream {
+  fill: var(--primaryColor);
+  animation: sand-drip 1.6s ease-in-out infinite alternate;
+}
+
+body.alt .hg-stream,body.alt .hg-cap,body.alt .hg-sand,body.alt .hg-time {
+    fill:var(--secondaryColor);
+}
+
+
+body.alt .hg-wall{
+    stroke:var(--secondaryColor);
+}
+
+
+@keyframes sand-drip {
+  from { opacity: 0.9; }
+  to   { opacity: 0.6; }
+}
+
+.hg-time {
+  fill: var(--primaryColor);
+  font-family: 'Courier New', Courier, monospace;
+  font-size:32px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  position: absolute;
+  bottom:2vh;
+}

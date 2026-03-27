@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import ClockBoard from './pages/ClockBoard'
 import Airport from './pages/Airport'
+import Hourglass from './pages/Hourglass'
 import Nav from './components/Nav'
 import { SettingsProvider } from './context/SettingsContext'
 import { AppProvider, useAppContext } from './context/AppContext'
@@ -48,6 +49,7 @@ function AppShell() {
       <Routes>
         <Route path="/" element={<ClockBoard />} />
         <Route path="/airport" element={<Airport />} />
+        <Route path="/hourglass" element={<Hourglass />} />
       </Routes>
     </div>
   )
