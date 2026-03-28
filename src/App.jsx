@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import ClockBoard from './pages/ClockBoard'
 import Airport from './pages/Airport'
 import Hourglass from './pages/Hourglass'
@@ -47,8 +47,9 @@ function AppShell() {
       </div>
 
       <Routes>
-        <Route path="/" element={<ClockBoard />} />
-        <Route path="/airport" element={<Airport />} />
+        <Route path="/" element={<Navigate to={localStorage.getItem('cb_defaultRoute') || '/clock'} replace />} />
+        <Route path="/clock" element={<ClockBoard />} />
+        <Route path="/flipboard" element={<Airport />} />
         <Route path="/hourglass" element={<Hourglass />} />
       </Routes>
     </div>

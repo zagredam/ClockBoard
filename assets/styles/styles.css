@@ -308,3 +308,271 @@ body.alt #app{
     align-items: center;
     justify-content: center;
   }
+
+/* ── Settings Dialog ─────────────────────────────────────── */
+
+.settings-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+}
+
+.settings-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  background-color: var(--primaryColor);
+  color: var(--secondaryColor);
+  width: min(520px, 92vw);
+  padding: 2rem;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+body.alt .settings-popup {
+  background-color: var(--secondaryColor);
+  color: var(--primaryColor);
+}
+
+.settings-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+  opacity: 0.7;
+  padding: 0;
+}
+
+.settings-close:hover {
+  opacity: 1;
+}
+
+/* ── Clock-type navigation buttons ──────────────────────── */
+
+.clock-type-nav {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  margin-top: 40px;
+}
+
+.clock-type-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.clock-type-btn {
+  width: 100%;
+  padding: 0.9rem 0.5rem;
+  font-size: 1.25rem;
+  font-family: endzone, Arial, Helvetica, sans-serif;
+  background: transparent;
+  color: var(--secondaryColor);
+  border: 2px solid var(--secondaryColor);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.03em;
+}
+
+body.alt .clock-type-btn {
+  color: var(--primaryColor);
+  border-color: var(--primaryColor);
+}
+
+.clock-type-btn.active {
+  background: var(--secondaryColor);
+  color: var(--primaryColor);
+}
+
+body.alt .clock-type-btn.active {
+  background: var(--primaryColor);
+  color: var(--secondaryColor);
+}
+
+.clock-type-btn:hover:not(.active) {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+/* Radio indicator for default clock */
+
+.clock-type-radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--secondaryColor);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.15s;
+  flex-shrink: 0;
+}
+
+body.alt .clock-type-radio {
+  border-color: var(--primaryColor);
+}
+
+.clock-type-radio:focus-visible {
+  outline: 2px solid #2196F3;
+  outline-offset: 2px;
+}
+
+.clock-type-radio-indicator {
+  display: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--secondaryColor);
+}
+
+body.alt .clock-type-radio-indicator {
+  background: var(--primaryColor);
+}
+
+.clock-type-radio[data-checked] .clock-type-radio-indicator {
+  display: block;
+}
+
+/* ── Settings rows ───────────────────────────────────────── */
+
+.settings-rows .navMenuRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0.75rem 0;
+  text-align: left;
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timer-inputs {
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.timer-sep {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* ── Base-UI Switch ──────────────────────────────────────── */
+
+.settings-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  border: none;
+  background: rgba(128, 128, 128, 0.35);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.settings-switch[data-checked] {
+  background: #2196F3;
+}
+
+.settings-switch:focus-visible {
+  outline: 2px solid #2196F3;
+  outline-offset: 2px;
+}
+
+.settings-switch-thumb {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  translate: 3px 0;
+  transition: translate 0.2s;
+}
+
+.settings-switch[data-checked] .settings-switch-thumb {
+  translate: 27px 0;
+}
+
+/* ── Base-UI Input ───────────────────────────────────────── */
+
+.settings-input {
+  background: rgba(128, 128, 128, 0.15);
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 5px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.45rem 0.6rem;
+  outline: none;
+  width: 120px;
+  transition: border-color 0.15s;
+}
+
+.settings-input--short {
+  width: 52px;
+}
+
+.settings-input:focus {
+  border-color: #2196F3;
+}
+
+.settings-input::placeholder {
+  opacity: 0.5;
+}
+
+/* ── Base-UI Button ──────────────────────────────────────── */
+
+.settings-btn {
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.settings-btn:hover {
+  background: rgba(128, 128, 128, 0.2);
+}
+
+.settings-btn:active {
+  background: rgba(128, 128, 128, 0.35);
+}
+
+.settings-btn:focus-visible {
+  outline: 2px solid #2196F3;
+  outline-offset: 2px;
+}
+
+/* timer row wraps on small widths */
+.timer-row .setting-control {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
