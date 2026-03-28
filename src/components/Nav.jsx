@@ -69,13 +69,13 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
               <div key={path} className="clock-type-item">
                 <button
                   className={`clock-type-btn${location.pathname === path ? ' active' : ''}`}
-                  onClick={() => handleNavigate(path)}
+                  onClick={() => {handleNavigate(path);handleDefaultChange(path);}}
                 >
                   {label}
                 </button>
-                <Radio.Root value={path} className="clock-type-radio">
+                {/* <Radio.Root value={path} className="clock-type-radio">
                   <Radio.Indicator className="clock-type-radio-indicator" />
-                </Radio.Root>
+                </Radio.Root> */}
               </div>
             ))}
           </RadioGroup>

@@ -75,29 +75,21 @@ body.alt #app{
     src: url(../media/fonts/ubuntu.mono.ttf);
   }
 
+  @font-face {
+    font-family: droid-sans-mono;
+    src: url(../media/fonts/droid-sans-mono.regular.ttf);
+  }
+
 .timeSection,.colonDelimiter{
     display:inline-block;
     text-align: center;
     font-size: calc(14vw * 1.15);
 
-  font-family: "ubuntu-mono", "Lucida Console", "Courier New", monospace;
-  letter-spacing: 0.03em;
+  font-family: "droid-sans-mono", "Lucida Console", "Courier New", monospace;
+  letter-spacing: 0.01em;
 }
 #clockMeridium{
-/*   font-size: 8vw; */
   position: relative;
-  /* top: -25px; */
-}
-/* #clockHourDigit1,#clockHourDigit2,#clockMinuteDigit1,#clockMinuteDigit2,#clockSecondDigit1,#clockSecondDigit2{
-  width:14vw;
-} */
-/* .colonDelimiter{
-  position:relative;
-  top:-18px;
-  width:3vw;
-} */
-#clockHour{
-  text-align: right;
 }
 #timerValueLabel,#stopwatchValueLabel{
     width: 175px;

@@ -43,19 +43,14 @@ export default function Clock({ showSeconds, showMeridum, showDate }) {
 
   return (
     <div id="presentationClock">
-      <div className="time">
+      <div className="time timeSection">
         {showTens && (
           <div className="timeSection" id="clockHourDigit1">{Math.floor(hours12 / 10)}</div>
         )}
-        <div className="timeSection" id="clockHourDigit2">{hours12 % 10}</div>
-        <div className="colonDelimiter">:</div>
-        <div className="timeSection" id="clockMinuteDigit1">{Math.floor(minutes / 10)}</div>
-        <div className="timeSection" id="clockMinuteDigit2">{minutes % 10}</div>
+        {hours12 % 10}:{Math.floor(minutes / 10)}{minutes % 10}
         {showSeconds && (
           <span id="secondsSpan">
-            <div className="colonDelimiter">:</div>
-            <div className="timeSection" id="clockSecondDigit1">{Math.floor(seconds / 10)}</div>
-            <div className="timeSection" id="clockSecondDigit2">{seconds % 10}</div>
+            :{Math.floor(seconds / 10)}{seconds % 10}
           </span>
         )}
         {showMeridum && (
