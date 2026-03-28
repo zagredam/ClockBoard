@@ -70,25 +70,32 @@ body.alt #app{
     font-family: endzone;
     src: url(../media/fonts/EndzoneSans-Medium.otf);
   }
+@font-face {
+    font-family: ubuntu-mono;
+    src: url(../media/fonts/ubuntu.mono.ttf);
+  }
 
 .timeSection,.colonDelimiter{
     display:inline-block;
     text-align: center;
-    font-size: calc(14vw * 1.15)
+    font-size: calc(14vw * 1.15);
+
+  font-family: "ubuntu-mono", "Lucida Console", "Courier New", monospace;
+  letter-spacing: 0.03em;
 }
 #clockMeridium{
 /*   font-size: 8vw; */
   position: relative;
-  top: -25px;
+  /* top: -25px; */
 }
-#clockHourDigit1,#clockHourDigit2,#clockMinuteDigit1,#clockMinuteDigit2,#clockSecondDigit1,#clockSecondDigit2{
+/* #clockHourDigit1,#clockHourDigit2,#clockMinuteDigit1,#clockMinuteDigit2,#clockSecondDigit1,#clockSecondDigit2{
   width:14vw;
-}
-.colonDelimiter{
+} */
+/* .colonDelimiter{
   position:relative;
   top:-18px;
   width:3vw;
-}
+} */
 #clockHour{
   text-align: right;
 }
