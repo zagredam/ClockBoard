@@ -13,7 +13,9 @@ const defaults = {
   showSeconds: true,
   showMeridum: true,
   showDate: true,
+  hourglassInterval: 3600
 }
+
 
 const SettingsContext = createContext(null)
 
@@ -36,6 +38,7 @@ export function SettingsProvider({ children }) {
   const [showSeconds, setShowSecondsRaw] = useState(() => load('showSeconds'))
   const [showMeridum, setShowMeridumRaw] = useState(() => load('showMeridum'))
   const [showDate, setShowDateRaw] = useState(() => load('showDate'))
+  const [hourglassInterval, setHourglassIntervalRaw] = useState(() => load('hourglassInterval'))
 
   useEffect(() => {
     const classes = [theme !== 'None' ? theme : '', altTheme ? 'alt' : ''].filter(Boolean)
@@ -47,7 +50,7 @@ export function SettingsProvider({ children }) {
   const setShowSeconds = (v) => { setShowSecondsRaw(v); save('showSeconds', v) }
   const setShowMeridum = (v) => { setShowMeridumRaw(v); save('showMeridum', v) }
   const setShowDate = (v) => { setShowDateRaw(v); save('showDate', v) }
-
+  const setHourglassInterval = (v) => { setHourglassIntervalRaw(v); save('hourglassInterval', v) }
   const toggleAltTheme = () =>
     setAltThemeRaw((prev) => { save('altTheme', !prev); return !prev })
 
@@ -70,6 +73,7 @@ export function SettingsProvider({ children }) {
         showSeconds, setShowSeconds,
         showMeridum, setShowMeridum,
         showDate, setShowDate,
+        hourglassInterval, setHourglassInterval,
         cycleTheme,
       }}
     >

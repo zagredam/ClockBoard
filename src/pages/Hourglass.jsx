@@ -1,14 +1,30 @@
 import { useState, useEffect } from 'react'
 import '../styles/hourglass.css'
+import { useSettings } from '../context/SettingsContext'
+
 
 export default function Hourglass() {
   const [time, setTime] = useState(new Date());
+  const { hourglassInterval,showSeconds, showMeridum } = useSettings()
   const [rotate, setRotate] = useState(false);
   const getProgress = (suppliedTime) => {
     const seconds = suppliedTime.getSeconds();
-    const minutes = suppliedTime.getMinutes() % 5;
-    const currentProgress = ((minutes*60)+seconds) / (60*5);
-    return currentProgress;
+    const minutes = suppliedTime.getMinutes();
+    switch(hourglassInterval){
+      case "yearly":
+        return .6;
+      case "monthly":
+        return .4;
+      case "60":
+        return seconds / 60;
+      case "3600":
+        return ((minutes*60) + seconds) / 3600;
+      case "86400":
+        const hours = suppliedTime.getHours();
+        return ((hours*3600) + (minutes*60) + seconds) / 86400;
+      default:  
+        return (((minutes*60)+seconds) % Number(hourglassInterval)) / Number(hourglassInterval);
+    }
   };
   const intervalTime = 200;
   useEffect(() => {
@@ -20,7 +36,7 @@ export default function Hourglass() {
       }
     }, intervalTime)
     return () => clearInterval(interval)
-  }, [])
+  }, [hourglassInterval])
 
   const minutes = time.getMinutes();
   const seconds = time.getSeconds();
@@ -53,6 +69,7 @@ export default function Hourglass() {
   const h = time.getHours() % 12 || 12;
   const m = String(minutes).padStart(2, '0');
 
+
   const flowing = !rotate && progress > 0 && progress < 1;
 
   return (
@@ -78,11 +95,11 @@ export default function Hourglass() {
         {/* ── Glass frame ─────────────────────────────── */}
 
         {/* Top cap — pill-shaped (rx = half height) */}
-         <rect x={MID - HW - 2} y={5} width={(HW + 2) * 2} height={8}
+         <rect x={MID - HW - 2} y={3} width={(HW + 2) * 2} height={10}
               rx="4" className="hg-cap" />
 
         {/* Bottom cap — pill-shaped */}
-        <rect x={MID - HW - 2} y={223} width={(HW + 2) * 2} height={8}
+        <rect x={MID - HW - 2} y={221} width={(HW + 2) * 2} height={10}
               rx="4" className="hg-cap" /> 
 
         {/* Top chamber walls — bezier curves blend smoothly into caps */}
@@ -113,7 +130,7 @@ export default function Hourglass() {
       </svg>
         {/* ── Time label ──────────────────────────────── */}
         <div className="hg-time">
-          {h}:{m}
+          {h}:{m}{showSeconds ? `:${String(seconds).padStart(2, '0')}` : ''} {showMeridum && (time.getHours() >= 12 ? 'PM' : 'AM')}
         </div>
     </div>
   )

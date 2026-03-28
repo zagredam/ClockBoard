@@ -324,8 +324,8 @@ body.alt #app{
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 101;
-  background-color: var(--primaryColor);
-  color: var(--secondaryColor);
+  background-color: #f3efdb;
+  color: #000;
   width: min(520px, 92vw);
   padding: 2rem;
   border-radius: 10px;
@@ -333,10 +333,10 @@ body.alt #app{
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
-body.alt .settings-popup {
+/* body.alt .settings-popup {
   background-color: var(--secondaryColor);
   color: var(--primaryColor);
-}
+} */
 
 .settings-close {
   position: absolute;
@@ -379,7 +379,7 @@ body.alt .settings-popup {
   font-size: 1.25rem;
   font-family: endzone, Arial, Helvetica, sans-serif;
   background: transparent;
-  color: var(--secondaryColor);
+  /* color: var(--secondaryColor); */
   border: 2px solid var(--secondaryColor);
   cursor: pointer;
   border-radius: 6px;
@@ -388,7 +388,7 @@ body.alt .settings-popup {
 }
 
 body.alt .clock-type-btn {
-  color: var(--primaryColor);
+  /* color: var(--primaryColor); */
   border-color: var(--primaryColor);
 }
 

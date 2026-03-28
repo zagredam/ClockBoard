@@ -33,7 +33,7 @@ function AppShell() {
         onAddStopwatch={addStopwatchHandler?.fn}
       />
 
-      <div
+      {(document.children[0].requestFullscreen || document.children[0].mozRequestFullscreen || document.children[0].webkitRequestFullscreen || document.children[0].msRequestFullscreen )&& <div
         id="fullscreenButton"
         className={`fullscreen${showControls ? ' show' : ''}`}
         style={{ position: 'absolute', top: '5%', right: '3%' }}
@@ -44,7 +44,7 @@ function AppShell() {
         {isFullscreen && (
           <i id="fullscreen-close" onClick={closeFullscreen} className="fas fa-compress actionIcon"></i>
         )}
-      </div>
+      </div>}
 
       <Routes>
         <Route path="/" element={<Navigate to={localStorage.getItem('cb_defaultRoute') || '/clock'} replace />} />

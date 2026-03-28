@@ -25,6 +25,7 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
     showDate, setShowDate,
     showSeconds, setShowSeconds,
     showMeridum, setShowMeridum,
+    hourglassInterval, setHourglassInterval
   } = useSettings()
 
   const navigate = useNavigate()
@@ -130,7 +131,23 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
                 <Switch.Thumb className="settings-switch-thumb" />
               </Switch.Root>
             </div>
-
+            {location.pathname === "/hourglass" && (
+              <div className="navMenuRow">
+                <strong>Interval</strong>
+                <div className="setting-control">
+                  <select id="hourglassSelect" value={hourglassInterval} onChange={(e) => setHourglassInterval(e.target.value)}>
+                    <option key={60} value={60}>Per minute</option>
+                    <option key={60*5} value={60*5}>Every 5 minutes</option>
+                    <option key={60*10} value={60*10}>Every 10 minutes</option>
+                    <option key={60*15} value={60*15}>Every 15 minutes</option>
+                    <option key={3600} value={3600}>Per hour</option>
+                    <option key={86400} value={86400}>Per Day</option>
+                    <option key={"monthly"} value={"monthly"}>Monthly</option>
+                    <option key={"yearly"} value={"yearly"}>Yearly</option>
+                  </select>
+                </div>
+              </div>
+            )}
             {onAddTimer && (
               <div id="addTimerOptions" className="navMenuRow timer-row">
                 <strong>Add Timer</strong>
