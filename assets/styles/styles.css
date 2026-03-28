@@ -189,6 +189,12 @@ body.alt #app{
       cursor: pointer;
   }
 
+  .mainActionIcon{
+    font-size:max(75px,7vw);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
   #dateContent{
       font-size: 5vw;
       text-align: center;

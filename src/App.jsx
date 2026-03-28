@@ -19,8 +19,8 @@ function AppShell() {
     <div id="app" ref={containerRef}>
       <div
         id="mainNavIcon"
-        className={`actionIcon${showControls ? ' show' : ''}`}
-        style={{ position: 'absolute', top: '5%', left: '3%' }}
+        className={`actionIcon mainActionIcon ${showControls ? ' show' : ''}`}
+        style={{ position: 'absolute', top: '25px', left: '25px' }}
         onClick={() => setNavOpen(true)}
       >
         &#9776;
@@ -36,13 +36,13 @@ function AppShell() {
       {(document.children[0].requestFullscreen || document.children[0].mozRequestFullscreen || document.children[0].webkitRequestFullscreen || document.children[0].msRequestFullscreen )&& <div
         id="fullscreenButton"
         className={`fullscreen${showControls ? ' show' : ''}`}
-        style={{ position: 'absolute', top: '5%', right: '3%' }}
+        style={{ position: 'absolute', top: '25px', right: '25px' }}
       >
         {!isFullscreen && (
-          <i id="fullscreen-open" onClick={makeFullscreen} className="fas fa-expand actionIcon"></i>
+          <i id="fullscreen-open" onClick={makeFullscreen} className="fas fa-expand  mainActionIcon"></i>
         )}
         {isFullscreen && (
-          <i id="fullscreen-close" onClick={closeFullscreen} className="fas fa-compress actionIcon"></i>
+          <i id="fullscreen-close" onClick={closeFullscreen} className="fas fa-compress actionIcon mainActionIcon"></i>
         )}
       </div>}
 
