@@ -7,6 +7,7 @@ import { Button } from '@base-ui/react/button'
 import { RadioGroup } from '@base-ui/react/radio-group'
 import { Radio } from '@base-ui/react/radio'
 import { NFL_TEAMS, useSettings } from '../context/SettingsContext'
+import { useAppContext } from '../context/AppContext'
 
 const CLOCK_TYPES = [
   { label: 'Clock', path: '/clock' },
@@ -27,6 +28,8 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
     showMeridum, setShowMeridum,
     hourglassInterval, setHourglassInterval
   } = useSettings()
+
+  const { containerRef } = useAppContext()
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -58,7 +61,7 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={(open) => { if (!open) onClose() }}>
-      <Dialog.Portal>
+      <Dialog.Portal container={containerRef.current}>
         <Dialog.Backdrop className="settings-backdrop" />
         <Dialog.Popup className="settings-popup">
 
@@ -150,7 +153,7 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
             )}
             {onAddTimer && (
               <div id="addTimerOptions" className="navMenuRow timer-row">
-                <strong>Add Timer</strong>
+                <strong>Timer</strong>
                 <div className="setting-control timer-inputs">
                   <Input
                     className="settings-input settings-input--short"
@@ -180,7 +183,7 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
 
             {onAddStopwatch && (
               <div id="addStopWatchOptions" className="navMenuRow">
-                <strong>Add Stopwatch</strong>
+                <strong>Stopwatch</strong>
                 <div className="setting-control">
                   <Input
                     className="settings-input"

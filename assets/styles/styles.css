@@ -7,12 +7,14 @@
 }
 
 .container{
-    height:100vh;
+    min-height:100vh;
     width:100vw;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
+    padding: 10vh 0;
+    box-sizing: border-box;
 }
 
 .time{
@@ -33,12 +35,6 @@
     margin:0 auto;
 }
 
-#fullscreenButton{
-    position: static;
-    top: 5vh;
-    right: 5vw;
-    position: absolute;
-}
 
 body{
     font-family: endzone,Arial, Helvetica, sans-serif;
@@ -83,13 +79,20 @@ body.alt #app{
 .timeSection,.colonDelimiter{
     display:inline-block;
     text-align: center;
-    font-size: calc(14vw * 1.15);
-
+    font-size: calc(16vw * 1.15);
+    font-family: "droid-sans-mono", "Lucida Console", "Courier New", monospace;
+    letter-spacing: 0.01em;
+    font-weight:bolder;
+}
+.clockMeridium{
+  position: relative;
+  display:inline-block;
+  text-align: center;
+  font-size: 7.5vw;
+  height:calc(12vw * 1.15);
   font-family: "droid-sans-mono", "Lucida Console", "Courier New", monospace;
   letter-spacing: 0.01em;
-}
-#clockMeridium{
-  position: relative;
+  font-weight:bolder;
 }
 #timerValueLabel,#stopwatchValueLabel{
     width: 175px;
@@ -293,12 +296,13 @@ body.alt #app{
     --secondaryColor:#c7924c;
   }
 
-  #mainNavIcon,#fullscreenButton,.buttons{
-    transition: opacity 1s ease-in-out ;
+
+  .controls-container{
+    transition: opacity .5s ease-in-out ;
     opacity:0;
-  }
-  #mainNavIcon.show,#fullscreenButton.show,.buttons.show{
-    opacity:1;
+    position:fixed;
+    top:25px;
+    left:25px;
   }
 
   #timersSection{

@@ -10,7 +10,6 @@ const schedule = []
 
 export default function Clock({ showSeconds, showMeridum, showDate }) {
   const [time, setTime] = useState(new Date())
-
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 200)
     return () => clearInterval(interval)
@@ -54,7 +53,7 @@ export default function Clock({ showSeconds, showMeridum, showDate }) {
           </span>
         )}
         {showMeridum && (
-          <div className="timeSection" id="clockMeridium">{meridium}</div>
+          <div className="clockMeridium">{meridium}</div>
         )}
       </div>
       {showDate && (
