@@ -6,6 +6,7 @@ import Nav from './components/Nav'
 import { SettingsProvider } from './context/SettingsContext'
 import { AppProvider, useAppContext } from './context/AppContext'
 import React from 'react'
+import Digital from './pages/Digital'
 
 function AppShell() {
   const {
@@ -18,8 +19,6 @@ function AppShell() {
   React.useEffect(() => {
     async function getTimeDriftWithLatency() {
       const browserTime = Date.now();
-      
-      try {
         // Measure round-trip time to server
         const requestStart = performance.now();
         const response = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC');
@@ -54,10 +53,6 @@ function AppShell() {
           isAhead: driftMs > 0,
           isAccurate: Math.abs(driftMs) < 500  // Within 500ms
         };
-      } catch (error) {
-        console.log('Error fetching server time: retrying');
-        return null;
-      }
     }
     setTimeout(() => {
     // Usage
@@ -69,7 +64,7 @@ function AppShell() {
         console.log(`Accurate: ${drift.isAccurate}`);
       }
     }).catch(err => {
-      console.error('Error occurred while fetching time drift:', err);
+      console.error('Error occurred while fetching time drift: retrtying', err);
       getTimeDriftWithLatency().then(drift => {
       if (drift) {
         console.log(`Network latency: ${drift.networkLatencyMs}ms`);
@@ -114,6 +109,7 @@ function AppShell() {
         <Route path="/clock" element={<ClockBoard />} />
         <Route path="/flipboard" element={<Airport />} />
         <Route path="/hourglass" element={<Hourglass />} />
+        <Route path="/digital" element={<Digital />} />
       </Routes>
     </div>
   )

@@ -1,0 +1,138 @@
+.digital-digit{
+    position:relative;
+    margin:4px;
+    flex: 1;
+    min-width: 0;
+    aspect-ratio: 1 / 2;
+}
+
+.digital-digit-group{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    max-width:80vw;
+    gap:max(2vw,20px);
+}
+
+.digital-digit-slot{
+    position:absolute;
+    opacity:.06;
+}
+.digital-digit-slot.active{
+    opacity:.9;
+    filter: drop-shadow(0 0 3px var(--primaryColor)) drop-shadow(0 0 6px var(--primaryColor));
+}
+.digital-digit-slot::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--primaryColor);
+}
+
+body.alt .digital-digit-slot.active{
+    filter: drop-shadow(0 0 3px var(--secondaryColor)) drop-shadow(0 0 6px var(--secondaryColor));
+}
+body.alt .digital-digit-slot::before{
+    background-color: var(--secondaryColor);
+}
+
+/* --- Shape classes --- */
+.digital-digit-slot-horizontal{
+    width:80%;
+    height:5%;
+}
+.digital-digit-slot-horizontal-half{
+    width:36%;
+    height:5%;
+}
+.digital-digit-slot-horizontal::before,
+.digital-digit-slot-horizontal-half::before{
+    clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
+}
+
+.digital-digit-slot-vertical{
+    height:40%;
+    width:10%;
+}
+/* Diagonal spans from corner to center — same thickness as vertical, ~47% tall */
+.digital-digit-slot-diagonal{
+    height:47%;
+    width:10%;
+}
+.digital-digit-slot-vertical::before,
+.digital-digit-slot-diagonal::before{
+    clip-path: polygon(0% 15%, 50% 0%, 100% 15%, 100% 85%, 50% 100%, 0% 85%);
+}
+
+/* --- Position classes --- */
+.digital-digit-slot-left-top{
+    left:2%;
+    top:6.5%;
+}
+.digital-digit-slot-left-bottom{
+    left:2%;
+    bottom:6.6%;
+}
+.digital-digit-slot-middle-top{
+    top:2%;
+    left:10%;
+}
+.digital-digit-slot-middle-left{
+    top:48%;
+    left:8%;
+}
+.digital-digit-slot-middle-right{
+    top:48%;
+    right:8%;
+}
+.digital-digit-slot-middle-bottom{
+    bottom:2%;
+    left:10%;
+}
+.digital-digit-slot-right-top{
+    right:2%;
+    top:6.5%;
+}
+.digital-digit-slot-right-bottom{
+    right:2%;
+    bottom:6.5%;
+}
+.digital-digit-slot-center-top{
+    left:45%;
+    top:7%;
+}
+.digital-digit-slot-center-bottom{
+    left:45%;
+    bottom:7%;
+}
+
+/* Diagonals: mathematically positioned for a 50×100px digit.
+   Each runs from a corner of the inner area to center (or vice-versa).
+   Rotation angles derived from atan(20px / 42px) ≈ 25.5° */
+.digital-digit-slot-diag-ul{
+    left:25%;
+    top:4%;
+    transform: rotate(-23deg);
+}
+.digital-digit-slot-diag-ur{
+    left:65%;
+    top:4%;
+    transform: rotate(23deg);
+}
+.digital-digit-slot-diag-ll{
+    left:25%;
+    top:50%;
+    transform: rotate(23deg);
+}
+.digital-digit-slot-diag-lr{
+    left:65%;
+    top:50%;
+    transform: rotate(-23deg);
+}
+
+.digit-sep {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 60px;
+  color: var(--secondaryColor);
+  user-select: none;
+}

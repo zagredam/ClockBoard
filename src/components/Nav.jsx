@@ -13,6 +13,7 @@ const CLOCK_TYPES = [
   { label: 'Clock', path: '/clock' },
   { label: 'Flipboard', path: '/flipboard' },
   { label: 'Hourglass', path: '/hourglass' },
+  { label: 'Digital', path: '/digital' },
 ]
 
 function loadDefaultRoute() {
