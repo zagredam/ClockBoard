@@ -4,7 +4,6 @@ export default function Timer({ timer, tick, showControls, onClose, onReset, onT
     : (timer.timeToExp - Date.now()) / 1000
 
   const expired = diffInSeconds < 0
-  const isVisible = !expired || tick % 2 === 0
 
   const hours = expired ? 0 : Math.floor(diffInSeconds / 3600)
   const minutes = expired ? 0 : Math.floor((diffInSeconds % 3600) / 60)
@@ -16,7 +15,7 @@ export default function Timer({ timer, tick, showControls, onClose, onReset, onT
 
   return (
     <div className="timer">
-      <div className={`timerValues${!isVisible ? ' invisible' : ''}`}>
+      <div className={`timerValues ${expired ? ' timerComplete' : ''}`}>
         <div className="timeSection timerHour">{hoursStr}</div>
         <div className="timeSection timerMinute">{minutesStr}</div>
         <div className="timeSection timerSecond">{secondsStr}</div>

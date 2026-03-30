@@ -86,6 +86,10 @@ function AppShell() {
     
   return (
     <div id="app" ref={containerRef}>
+      <audio id="timer-complete-sound">
+        <source src="assets/media/timer.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
       <div className="controls-container" style={showControls ? {pointerEvents:"all",opacity:1} : {pointerEvents:"none"}}>
         <i onClick={() => setNavOpen(true)} className="fas fa-cog  mainActionIcon"></i>
       

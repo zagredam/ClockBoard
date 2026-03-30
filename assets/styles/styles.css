@@ -13,7 +13,7 @@
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    padding: 10vh 0;
+    padding: 5vh 0;
     box-sizing: border-box;
 }
 
@@ -214,8 +214,13 @@ body.alt #app{
     text-align:center;
   }
 
-  .invisible{
-      visibility: hidden;
+  @keyframes timerFlash {
+    0%,100% { opacity:1; }
+    50%   { opacity:.5; }
+  }
+
+  .timerComplete{
+    animation: timerFlash 2s ease-in-out infinite;
   }
 
   .navMenuRow{

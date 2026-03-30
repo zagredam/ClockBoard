@@ -1,42 +1,74 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import '../styles/hourglass.css'
 import { useSettings } from '../context/SettingsContext'
+import { useAppContext } from '../context/AppContext'
 
 
 export default function Hourglass() {
   const [time, setTime] = useState(new Date());
   const { hourglassInterval,showSeconds, showMeridum } = useSettings()
+    const { showControls, setAddTimerHandler, setAddStopwatchHandler } = useAppContext()
   const [rotate, setRotate] = useState(false);
+  const [timer, setTimer] = useState(null);
+
+    const handleAddTimer = useCallback((minutes, seconds, label) => {
+      if ((minutes === '' && seconds === '') || isNaN(minutes) || isNaN(seconds)) return
+      const timerValue = 60 * 1000 * (Number(minutes) || 0) + 1000 * (Number(seconds) || 0)
+      setTimer(
+        { id: 1, label, timerValue, timeToExp: Date.now() + timerValue, paused: false, timeLeft: null },
+      )
+    }, [])
+
   const getProgress = (suppliedTime) => {
-    const seconds = suppliedTime.getSeconds();
-    const minutes = suppliedTime.getMinutes();
-    switch(hourglassInterval){
-      case "yearly":
-        return .6;
-      case "monthly":
-        return .4;
-      case "60":
-        return seconds / 60;
-      case "3600":
-        return ((minutes*60) + seconds) / 3600;
-      case "86400":
-        const hours = suppliedTime.getHours();
-        return ((hours*3600) + (minutes*60) + seconds) / 86400;
-      default:  
-        return (((minutes*60)+seconds) % Number(hourglassInterval)) / Number(hourglassInterval);
+    if(!!timer){
+      const diffInSeconds = timer.paused
+    ? (timer.timeLeft || 0)
+    : (timer.timeToExp - Date.now()) / 1000
+      return diffInSeconds < 0 ? 1 :((timer.timerValue / 1000)-diffInSeconds) / (timer.timerValue / 1000);
+    }
+    else{
+      const seconds = suppliedTime.getSeconds();
+      const minutes = suppliedTime.getMinutes();
+      switch(hourglassInterval){
+        case "yearly":
+          const month = suppliedTime.getMonth();
+          const day = suppliedTime.getDate();
+          //get total number of days in month
+          const daysInMonth = new Date(suppliedTime.getFullYear(), month + 1, 0).getDate();
+          return ((month * 10) + ((day / daysInMonth) * 10)) / 120;
+        case "monthly":
+          return (suppliedTime.getDate() + (suppliedTime.getHours() / 24) )/ new Date(suppliedTime.getFullYear(), suppliedTime.getMonth() + 1, 0).getDate();
+        case "60":
+          return seconds / 60;
+        case "3600":
+          return ((minutes*60) + seconds) / 3600;
+        case "86400":
+          const hours = suppliedTime.getHours();
+          return ((hours*3600) + (minutes*60) + seconds) / 86400;
+        default:  
+          return (((minutes*60)+seconds) % Number(hourglassInterval)) / Number(hourglassInterval);
+      }
     }
   };
-  const intervalTime = 200;
+  const rerenderInterval = 200;
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date());
-      if(getProgress(new Date()) > getProgress(new Date(new Date().getTime() + intervalTime )) ){
+      if(!!timer && getProgress(new Date()) > getProgress(new Date(new Date().getTime() + rerenderInterval )) ){
         setRotate(true);
         setTimeout(()=>{setRotate(false)},1200);
       }
-    }, intervalTime)
+    }, rerenderInterval)
     return () => clearInterval(interval)
   }, [hourglassInterval])
+
+  // Register timer/stopwatch callbacks into Nav (via AppContext)
+  useEffect(() => {
+    setAddTimerHandler({ fn: handleAddTimer })
+    return () => {
+      setAddTimerHandler(null)
+    }
+  }, [handleAddTimer, setAddTimerHandler])
 
   const minutes = time.getMinutes();
   const seconds = time.getSeconds();
