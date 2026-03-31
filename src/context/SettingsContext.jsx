@@ -1,15 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { TEAMS } from '../data/teams'
 
-export const NFL_TEAMS = [
-  'None', 'MZ', 'ARZ', 'ATL', 'BLT', 'BUF', 'CAR', 'CHI', 'CIN', 'CLV',
-  'DAL', 'DEN', 'DET', 'GB', 'HST', 'IND', 'JAX', 'KC', 'LAC', 'LA',
-  'MIA', 'MIN', 'NE', 'NO', 'NYG', 'NYJ', 'LV', 'PHI', 'PIT', 'SF',
-  'SEA', 'TB', 'TEN', 'WAS',
-]
 
 const defaults = {
-  theme: 'None',
-  altTheme: false,
+  theme: 'MZ',
+  altTheme: true,
   showSeconds: true,
   showMeridum: true,
   showDate: true,
@@ -35,11 +30,19 @@ function save(key, value) {
 export function SettingsProvider({ children }) {
   const [theme, setThemeRaw] = useState(() => load('theme'))
   const [altTheme, setAltThemeRaw] = useState(() => load('altTheme'))
+  const [customThemes, setCustomThemesRaw] = useState(() => load('customThemes') ?? [])
   const [showSeconds, setShowSecondsRaw] = useState(() => load('showSeconds'))
   const [showMeridum, setShowMeridumRaw] = useState(() => load('showMeridum'))
   const [showDate, setShowDateRaw] = useState(() => load('showDate'))
   const [hourglassInterval, setHourglassIntervalRaw] = useState(() => load('hourglassInterval'))
-
+  const themeOptions = [...TEAMS,...customThemes];
+  let themeValues = {...(themeOptions.find(t => t.id === theme) )};
+  if(altTheme){
+    //swap primaryColor and secondaryColor properties of themeValues
+    const tempColor = themeValues.primaryColor;
+    themeValues.primaryColor = themeValues.secondaryColor;
+    themeValues.secondaryColor = tempColor;
+  }
   useEffect(() => {
     const classes = [theme !== 'None' ? theme : '', altTheme ? 'alt' : ''].filter(Boolean)
     document.body.className = classes.join(' ')
@@ -51,19 +54,20 @@ export function SettingsProvider({ children }) {
   const setShowMeridum = (v) => { setShowMeridumRaw(v); save('showMeridum', v) }
   const setShowDate = (v) => { setShowDateRaw(v); save('showDate', v) }
   const setHourglassInterval = (v) => { setHourglassIntervalRaw(v); save('hourglassInterval', v) }
+  const setCustomThemes = (v) => { setCustomThemesRaw(v); save('customThemes', v) }
   const toggleAltTheme = () =>
     setAltThemeRaw((prev) => { save('altTheme', !prev); return !prev })
 
-  const cycleTheme = (dir) =>
-    setThemeRaw((current) => {
-      const idx = NFL_TEAMS.indexOf(current)
-      const next =
-        dir === 'prev'
-          ? NFL_TEAMS[idx <= 0 ? NFL_TEAMS.length - 1 : idx - 1]
-          : NFL_TEAMS[idx >= NFL_TEAMS.length - 1 ? 0 : idx + 1]
-      save('theme', next)
-      return next
-    })
+  // const cycleTheme = (dir) =>
+  //   setThemeRaw((current) => {
+  //     const idx = TEAMS.findIndex(t => t.id === current)
+  //     const next =
+  //       dir === 'prev'
+  //         ? TEAMS[idx <= 0 ? TEAMS.length - 1 : idx - 1].id
+  //         : TEAMS[idx >= TEAMS.length - 1 ? 0 : idx + 1].id
+  //     save('theme', next)
+  //     return next
+  //   })
 
   return (
     <SettingsContext.Provider
@@ -74,7 +78,9 @@ export function SettingsProvider({ children }) {
         showMeridum, setShowMeridum,
         showDate, setShowDate,
         hourglassInterval, setHourglassInterval,
-        cycleTheme,
+        themeOptions, themeValues,
+        customThemes, setCustomThemes
+        
       }}
     >
       {children}

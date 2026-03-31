@@ -7,7 +7,6 @@ import { useAppContext } from '../context/AppContext'
 export default function Hourglass() {
   const [time, setTime] = useState(new Date());
   const { hourglassInterval,showSeconds, showMeridum } = useSettings()
-    const { showControls, setAddTimerHandler, setAddStopwatchHandler } = useAppContext()
   const [rotate, setRotate] = useState(false);
   const [timer, setTimer] = useState(null);
 
@@ -54,7 +53,7 @@ export default function Hourglass() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date());
-      if(!!timer && getProgress(new Date()) > getProgress(new Date(new Date().getTime() + rerenderInterval )) ){
+      if(getProgress(new Date()) > getProgress(new Date(new Date().getTime() + rerenderInterval )) ){
         setRotate(true);
         setTimeout(()=>{setRotate(false)},1200);
       }
@@ -63,12 +62,12 @@ export default function Hourglass() {
   }, [hourglassInterval])
 
   // Register timer/stopwatch callbacks into Nav (via AppContext)
-  useEffect(() => {
-    setAddTimerHandler({ fn: handleAddTimer })
-    return () => {
-      setAddTimerHandler(null)
-    }
-  }, [handleAddTimer, setAddTimerHandler])
+  // useEffect(() => {
+  //   setAddTimerHandler({ fn: handleAddTimer })
+  //   return () => {
+  //     setAddTimerHandler(null)
+  //   }
+  // }, [handleAddTimer, setAddTimerHandler])
 
   const minutes = time.getMinutes();
   const seconds = time.getSeconds();

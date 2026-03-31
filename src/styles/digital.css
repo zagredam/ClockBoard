@@ -11,6 +11,7 @@
     flex-direction: row;
     width:100%;
     max-width:80vw;
+    max-height:80vh;
     gap:max(2vw,20px);
 }
 
@@ -19,7 +20,7 @@
     opacity:.06;
 }
 .digital-digit-slot.active{
-    opacity:.9;
+    opacity:1;
     filter: drop-shadow(0 0 3px var(--primaryColor)) drop-shadow(0 0 6px var(--primaryColor));
 }
 .digital-digit-slot::before{
@@ -29,12 +30,12 @@
     background-color: var(--primaryColor);
 }
 
-body.alt .digital-digit-slot.active{
+/* body.alt .digital-digit-slot.active{
     filter: drop-shadow(0 0 3px var(--secondaryColor)) drop-shadow(0 0 6px var(--secondaryColor));
 }
 body.alt .digital-digit-slot::before{
     background-color: var(--secondaryColor);
-}
+} */
 
 /* --- Shape classes --- */
 .digital-digit-slot-horizontal{

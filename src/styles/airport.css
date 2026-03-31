@@ -103,9 +103,9 @@ body{
   letter-spacing: -0.02em;
 }
 
-body.alt .fd-inner{
+/* body.alt .fd-inner{
     color:var(--secondaryColor);
-}
+} */
 
 .fd-top  .fd-inner { top: 0; }
 .fd-bottom .fd-inner { bottom: 0; }
@@ -136,7 +136,7 @@ body.alt .fd-inner{
   font-family: 'Courier New', Courier, monospace;
   font-size: calc(var(--dw) * 0.75);
   font-weight: 700;
-  color: var(--primaryColor);
+  color: var(--secondaryColor);
   line-height: 1;
   padding: 0 calc(var(--dw) * 0.02);
   user-select: none;
@@ -146,9 +146,9 @@ body.alt .fd-inner{
   top: calc(var(--dw) * -0.05);
 }
 
-body.alt .airport-sep{
+/* body.alt .airport-sep{
     color:var(--secondaryColor);
-}
+} */
 
 
 @keyframes sep-blink {
@@ -156,7 +156,133 @@ body.alt .airport-sep{
   50%       { opacity: 0.15; }
 }
 
-.airport-meridum{
-  font-size:6vw;
-  color:#ddd;
+.airport-meridum {
+  font-size: 6vw;
+  color: #ddd;
+}
+
+.airport-meridum--corner {
+  font-size: calc(var(--dw) * 0.9);
+}
+
+/* ── FlipLabel: wide single-panel flip card ─────────────────── */
+
+.fd-label {
+  width: calc(var(--dw) * 7);
+  aspect-ratio: unset;
+  height: calc(var(--dw) * 1.5);
+}
+
+.fd-label-inner {
+  font-size: calc(var(--dw) * 0.72);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ── Board mode (timers / stopwatches active) ───────────────── */
+
+.airport-bg--board {
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.board-container {
+  display: flex;
+  flex-direction: column;
+  gap: min(.6vw, 1.2vh);
+}
+
+.board-row {
+  display: flex;
+  align-items: center;
+  gap: min(.6vw, 1vh);
+}
+
+.board-row--header {
+  margin-bottom: min(.3vw, .6vh);
+}
+
+/* Fixed-width digit groups — header and data share the same widths */
+.board-digits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: min(.35vw, .7vh);
+}
+
+.board-digits--name {
+  width: calc(var(--dw) * 7);
+}
+
+.board-digits--3 {
+  width: calc(3 * var(--dw) + 2 * min(.35vw, .7vh));
+}
+
+.board-digits--2 {
+  width: calc(2 * var(--dw) + 1 * min(.35vw, .7vh));
+}
+
+.board-sep {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: calc(var(--dw) * 0.75);
+  font-weight: 700;
+  color: var(--primaryColor);
+  line-height: 1;
+  user-select: none;
+}
+
+/* invisible spacer to keep header aligned with data rows */
+.board-sep--ghost {
+  visibility: hidden;
+}
+
+.board-hdr {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: calc(var(--dw) * 0.45);
+  font-weight: 600;
+  color: var(--secondaryColor);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+/* ── Row hover controls ─────────────────────────────────────── */
+
+.board-row-controls {
+  display: flex;
+  align-items: center;
+  gap: min(.4vw, .8vh);
+  margin-left: min(.8vw, 1.2vh);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.board-row:hover .board-row-controls {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.board-row-controls .actionIcon {
+  font-size: calc(var(--dw) * 0.65);
+  color: var(--secondaryColor);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.board-row-controls .actionIcon:hover {
+  color: var(--primaryColor);
+}
+
+/* ── Corner clock (bottom-right in board mode) ──────────────── */
+
+.airport-corner {
+  position: absolute;
+  bottom: 2vh;
+  right: 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

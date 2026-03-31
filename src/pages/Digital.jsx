@@ -76,8 +76,8 @@ const DigitalDigit = ({digit}) => {
 }
 
 export default function Digital() {
-  const { showSeconds, showMeridum, showDate, toggleAltTheme, cycleTheme } = useSettings()
-  const { showControls, setAddTimerHandler, setAddStopwatchHandler } = useAppContext()
+  const { showSeconds, showMeridum, showDate } = useSettings()
+  const { showControls,   } = useAppContext()
 
   const [timers, setTimers] = useState([])
   const [stopwatches, setStopwatches] = useState([])
@@ -99,22 +99,22 @@ export default function Digital() {
     ])
   }, [])
 
-  const handleAddStopwatch = useCallback((label) => {
+  const handleAddStopwatch = useCallback((label, startTime) => {
     setStopwatches((prev) => [
       ...prev,
-      { id: idCounter++, label, paused: false, markedTime: Date.now(), pausedDiff: 0 },
+      { id: idCounter++, label, paused: false, markedTime: startTime ?? Date.now(), pausedDiff: 0 },
     ])
   }, [])
 
   // Register timer/stopwatch callbacks into Nav (via AppContext)
-  useEffect(() => {
-    setAddTimerHandler({ fn: handleAddTimer })
-    setAddStopwatchHandler({ fn: handleAddStopwatch })
-    return () => {
-      setAddTimerHandler(null)
-      setAddStopwatchHandler(null)
-    }
-  }, [handleAddTimer, handleAddStopwatch, setAddTimerHandler, setAddStopwatchHandler])
+  // useEffect(() => {
+  //   setAddTimerHandler({ fn: handleAddTimer })
+  //   setAddStopwatchHandler({ fn: handleAddStopwatch })
+  //   return () => {
+  //     setAddTimerHandler(null)
+  //     setAddStopwatchHandler(null)
+  //   }
+  // }, [handleAddTimer, handleAddStopwatch, setAddTimerHandler, setAddStopwatchHandler])
 
   // Gamepad setup
 

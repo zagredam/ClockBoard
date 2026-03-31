@@ -3,7 +3,7 @@ import ClockBoard from './pages/ClockBoard'
 import Airport from './pages/Airport'
 import Hourglass from './pages/Hourglass'
 import Nav from './components/Nav'
-import { SettingsProvider } from './context/SettingsContext'
+import { SettingsProvider, useSettings } from './context/SettingsContext'
 import { AppProvider, useAppContext } from './context/AppContext'
 import React from 'react'
 import Digital from './pages/Digital'
@@ -13,9 +13,10 @@ function AppShell() {
     navOpen, setNavOpen,
     isFullscreen, makeFullscreen, closeFullscreen,
     showControls,
-    addTimerHandler, addStopwatchHandler,
+    addTimer, addStopwatch,
     containerRef,
-  } = useAppContext()
+  } = useAppContext();
+  const {themeValues} = useSettings(); 
   React.useEffect(() => {
     async function getTimeDriftWithLatency() {
       const browserTime = Date.now();
@@ -80,7 +81,7 @@ function AppShell() {
   }, []);
     
   return (
-    <div id="app" ref={containerRef}>
+    <div id="app" ref={containerRef} style={{  "--primaryColor": themeValues.primaryColor,"--secondaryColor": themeValues.secondaryColor }}>
       <audio id="timer-complete-sound">
         <source src="assets/media/timer.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
@@ -101,11 +102,11 @@ function AppShell() {
       <Nav
         isOpen={navOpen}
         onClose={() => setNavOpen(false)}
-        onAddTimer={addTimerHandler?.fn}
-        onAddStopwatch={addStopwatchHandler?.fn}
+        onAddTimer={addTimer}
+        onAddStopwatch={addStopwatch}
       />
       <Routes>
-        <Route path="/" element={<Navigate to={localStorage.getItem('cb_defaultRoute') || '/clock'} replace />} />
+        <Route path="/" element={<Navigate to={localStorage.getItem('cb_defaultRoute') || '/flipboard'} replace />} />
         <Route path="/clock" element={<ClockBoard />} />
         <Route path="/flipboard" element={<Airport />} />
         <Route path="/hourglass" element={<Hourglass />} />

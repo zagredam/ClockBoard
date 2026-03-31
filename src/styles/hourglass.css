@@ -7,9 +7,9 @@
   background: var(--secondaryColor);
 }
 
-body.alt .hourglass-bg{
+/* body.alt .hourglass-bg{
     background:var(--primaryColor);
-}
+} */
 
 .hourglass-svg {
   height: min(85vh, 98vw);
@@ -39,14 +39,14 @@ body.alt .hourglass-bg{
   animation: sand-drip 1.6s ease-in-out infinite alternate;
 }
 
-body.alt .hg-stream,body.alt .hg-cap,body.alt .hg-sand,body.alt .hg-time {
+/* body.alt .hg-stream,body.alt .hg-cap,body.alt .hg-sand,body.alt .hg-time {
     fill:var(--secondaryColor);
 }
 
 
 body.alt .hg-wall{
     stroke:var(--secondaryColor);
-}
+} */
 
 
 @keyframes sand-drip {
