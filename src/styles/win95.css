@@ -1,0 +1,238 @@
+.win95-desktop {
+  position: fixed;
+  inset: 0;
+  background: var(--secondaryColor);
+  overflow: hidden;
+  /* Base unit: ~1.5% of the smaller viewport dimension, clamped to readable range */
+  --wu: clamp(10px, min(1.5vw, 1.5vh), 22px);
+}
+
+/* ── Window ────────────────────────────────────────────────── */
+.win95-window {
+  position: absolute;
+  background: #c0c0c0;
+  border: calc(var(--wu) * 0.22) solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: 0 0 0 1px #000;
+  font-family: "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: calc(var(--wu) * 1.1);
+  cursor: default;
+}
+
+/* ── Title bar ─────────────────────────────────────────────── */
+.win95-titlebar {
+  background: var(--primaryColor, #000080);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  height: calc(var(--wu) * 2.6);
+  padding: calc(var(--wu) * 0.2) calc(var(--wu) * 0.2) calc(var(--wu) * 0.2) calc(var(--wu) * 0.45);
+  gap: calc(var(--wu) * 0.3);
+  user-select: none;
+  cursor: default;
+}
+
+.win95-title-icon {
+  font-size: calc(var(--wu) * 1.3);
+  width: calc(var(--wu) * 1.6);
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.win95-title-text {
+  flex: 1;
+  font-weight: bold;
+  font-size: calc(var(--wu) * 1.15);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.win95-title-btns {
+  display: flex;
+  gap: calc(var(--wu) * 0.2);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Title bar buttons ─────────────────────────────────────── */
+.win95-titlebtn {
+  width: calc(var(--wu) * 1.95);
+  height: calc(var(--wu) * 1.75);
+  background: #c0c0c0;
+  color: #000;
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: calc(var(--wu) * 0.95);
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  border: calc(var(--wu) * 0.1) solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: 0 0 0 1px #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.win95-titlebtn:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: calc(var(--wu) * 0.1) 0 0 calc(var(--wu) * 0.1);
+}
+
+/* ── Window body ───────────────────────────────────────────── */
+.win95-window-body {
+  padding: calc(var(--wu) * 0.55);
+}
+
+/* ── Analog clock SVG ──────────────────────────────────────── */
+.win95-clock-svg {
+  display: block;
+  width: min(40vh, 40vw);
+  height: min(40vh, 40vw);
+  border: calc(var(--wu) * 0.22) solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset calc(var(--wu) * 0.1) calc(var(--wu) * 0.1) 0 #404040;
+  background: white;
+}
+
+/* ── Clock window body (clock + optional calendar) ─────────── */
+.win95-clock-body {
+  display: flex;
+  gap: calc(var(--wu) * 0.55);
+  align-items: stretch;
+}
+
+/* ── Calendar panel ────────────────────────────────────────── */
+.win95-cal {
+  width: min(40vh, 40vw);
+  flex-shrink: 0;
+  border: calc(var(--wu) * 0.22) solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset calc(var(--wu) * 0.1) calc(var(--wu) * 0.1) 0 #404040;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.win95-cal-header {
+  background: var(--primaryColor, #000080);
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: calc(var(--wu) * 1.2);
+  padding: calc(var(--wu) * 0.45) calc(var(--wu) * 0.4);
+  flex-shrink: 0;
+}
+
+.win95-cal-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 1fr;
+  padding: calc(var(--wu) * 0.35);
+  gap: calc(var(--wu) * 0.08);
+}
+
+.win95-cal-dow {
+  text-align: center;
+  font-weight: bold;
+  font-size: calc(var(--wu) * 0.9);
+  color: #808080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: calc(var(--wu) * 0.15);
+}
+
+.win95-cal-day {
+  font-size: calc(var(--wu) * 1.0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  cursor: default;
+}
+
+.win95-cal-today {
+  background: var(--primaryColor, #000080);
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ── Stopwatch display ─────────────────────────────────────── */
+.win95-time-display {
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(28px, min(5vw, 5vh), 80px);
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+  padding: calc(var(--wu) * 0.8) calc(var(--wu) * 1.4) calc(var(--wu) * 0.5);
+  letter-spacing: calc(var(--wu) * 0.2);
+  white-space: nowrap;
+  border: calc(var(--wu) * 0.22) solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  background: #fff;
+}
+
+/* ── Timer progress bar ────────────────────────────────────── */
+.win95-pbar-track {
+  position: relative;
+  border: calc(var(--wu) * 0.22) solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset calc(var(--wu) * 0.1) calc(var(--wu) * 0.1) 0 #404040;
+  background: #fff;
+  height: calc(var(--wu) * 3.5);
+  min-width: calc(var(--wu) * 14);
+  overflow: hidden;
+}
+
+.win95-pbar-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: var(--primaryColor, #000080);
+  transition: width 0.18s linear;
+}
+
+/* Two overlapping labels give perfect contrast over fill + track */
+.win95-pbar-lbl {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: calc(var(--wu) * 1.5);
+  font-weight: bold;
+  letter-spacing: calc(var(--wu) * 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+  color: #000;
+}
+
+.win95-pbar-lbl-inv {
+  color: #fff;
+  /* clipped to the filled region via inline clip-path */
+}
+
+.win95-pbar-expired .win95-pbar-fill {
+  background: #c00000;
+  animation: win95-blink 0.6s step-end infinite;
+}
+
+@keyframes win95-blink {
+  50% { opacity: 0.15; }
+}
+
+.win95-item-label {
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: calc(var(--wu) * 1.1);
+  text-align: center;
+  color: #000;
+  padding: calc(var(--wu) * 0.3) calc(var(--wu) * 0.4) calc(var(--wu) * 0.1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

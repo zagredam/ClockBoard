@@ -13,6 +13,7 @@ const CLOCK_TYPES = [
   { label: 'Simple', path: '/clock' },
   { label: 'Digital', path: '/digital' },
   { label: 'Hourglass', path: '/hourglass' },
+  { label: '95', path: '/win95' },
 ]
 
 function loadDefaultRoute() {

@@ -7,6 +7,7 @@ import { SettingsProvider, useSettings } from './context/SettingsContext'
 import { AppProvider, useAppContext } from './context/AppContext'
 import React from 'react'
 import Digital from './pages/Digital'
+import Win95 from './pages/Win95'
 
 function AppShell() {
   const {
@@ -111,6 +112,7 @@ function AppShell() {
         <Route path="/flipboard" element={<Airport />} />
         <Route path="/hourglass" element={<Hourglass />} />
         <Route path="/digital" element={<Digital />} />
+        <Route path="/win95" element={<Win95 />} />
       </Routes>
     </div>
   )
