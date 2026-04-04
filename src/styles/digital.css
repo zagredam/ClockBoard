@@ -15,6 +15,27 @@
     gap:max(2vw,20px);
 }
 
+/* Shrink the time digits when timers are present */
+.digital-digit-group--compact{
+    max-height:40vh;
+}
+
+/* Date row is always smaller */
+.digital-digit-group--date{
+    max-height:18vh;
+    gap:max(0.8vw,8px);
+    margin-top:1vh;
+}
+
+/* Timers/stopwatches section below the clock */
+.digital-timers-section{
+    width:100%;
+    margin-top:2vh;
+    border-top: 2px solid var(--primaryColor);
+    padding-top:1.5vh;
+    opacity:0.85;
+}
+
 .digital-digit-slot{
     position:absolute;
     opacity:.06;
