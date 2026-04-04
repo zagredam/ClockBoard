@@ -7,6 +7,7 @@ import { Button } from '@base-ui/react/button'
 import { RadioGroup } from '@base-ui/react/radio-group'
 import { useSettings } from '../context/SettingsContext'
 import { useAppContext } from '../context/AppContext'
+import { useServerContext } from '../context/ServerContext'
 
 const CLOCK_TYPES = [
   { label: 'Flipboard', path: '/flipboard' },
@@ -174,6 +175,75 @@ function StopwatchesTab({ onAddStopwatch }) {
   )
 }
 
+function ServerTab() {
+  const { serverUrl, setServerUrl, serverHeaders, setServerHeaders, isConnected } = useServerContext()
+
+  const [urlDraft, setUrlDraft] = useState(serverUrl)
+
+  const applyUrl = () => setServerUrl(urlDraft.trim())
+
+  const updateHeader = (i, field, value) =>
+    setServerHeaders(serverHeaders.map((h, idx) => idx === i ? { ...h, [field]: value } : h))
+
+  const addHeader = () => setServerHeaders([...serverHeaders, { key: '', value: '' }])
+
+  const removeHeader = (i) => setServerHeaders(serverHeaders.filter((_, idx) => idx !== i))
+
+  return (
+    <div className="tab-content">
+      <div className="navMenuRow">
+        <strong>Server URL</strong>
+        <div className="setting-control" style={{ flex: 1, gap: '6px' }}>
+          <Input
+            className="settings-input"
+            placeholder="https://example.com"
+            value={urlDraft}
+            onChange={e => setUrlDraft(e.target.value)}
+            onBlur={applyUrl}
+            onKeyDown={e => e.key === 'Enter' && applyUrl()}
+            style={{ flex: 1 }}
+          />
+          <span
+            style={{
+              display: 'inline-block',
+              width: 10,
+              height: 10,
+              borderRadius: '50%',
+              background: isConnected ? '#4caf50' : '#888',
+              flexShrink: 0,
+            }}
+            title={isConnected ? 'Connected' : 'Not connected'}
+          />
+        </div>
+      </div>
+
+      <div style={{ marginTop: '10px' }}>
+        <strong>Headers</strong>
+        {serverHeaders.map((h, i) => (
+          <div key={i} className="navMenuRow" style={{ marginTop: '6px' }}>
+            <Input
+              className="settings-input"
+              placeholder="Key"
+              value={h.key}
+              onChange={e => updateHeader(i, 'key', e.target.value)}
+            />
+            <Input
+              className="settings-input"
+              placeholder="Value"
+              value={h.value}
+              onChange={e => updateHeader(i, 'value', e.target.value)}
+            />
+            <button className="settings-btn-icon" onClick={() => removeHeader(i)}>✕</button>
+          </div>
+        ))}
+        <div className="tab-actions">
+          <Button className="settings-btn" onClick={addHeader}>+ Header</Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
   const {
     theme, setTheme,
@@ -218,6 +288,7 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
     { id: 'settings', label: 'Settings' },
     ...(onAddTimer ? [{ id: 'timers', label: 'Timers' }] : []),
     ...(onAddStopwatch ? [{ id: 'stopwatches', label: 'Stopwatches' }] : []),
+    { id: 'server', label: 'Server' },
   ]
 
   return (
@@ -326,6 +397,7 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
 
           {activeTab === 'timers' && <TimersTab onAddTimer={onAddTimer} />}
           {activeTab === 'stopwatches' && <StopwatchesTab onAddStopwatch={onAddStopwatch} />}
+          {activeTab === 'server' && <ServerTab />}
 
         </Dialog.Popup>
       </Dialog.Portal>

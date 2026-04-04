@@ -5,6 +5,7 @@ import Hourglass from './pages/Hourglass'
 import Nav from './components/Nav'
 import { SettingsProvider, useSettings } from './context/SettingsContext'
 import { AppProvider, useAppContext } from './context/AppContext'
+import { ServerProvider } from './context/ServerContext'
 import React from 'react'
 import Digital from './pages/Digital'
 import Win95 from './pages/Win95'
@@ -121,9 +122,11 @@ function AppShell() {
 export default function App() {
   return (
     <SettingsProvider>
-      <AppProvider>
-        <AppShell />
-      </AppProvider>
+      <ServerProvider>
+        <AppProvider>
+          <AppShell />
+        </AppProvider>
+      </ServerProvider>
     </SettingsProvider>
   )
 }
