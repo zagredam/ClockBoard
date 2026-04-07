@@ -256,7 +256,8 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
     customThemes, setCustomThemes
   } = useSettings()
 
-  const { containerRef } = useAppContext()
+  const { containerRef, timers, stopwatches } = useAppContext()
+  const hourglassDisabled = timers.length > 1 || stopwatches.length > 0
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -300,16 +301,21 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
           <Dialog.Close className="settings-close">&times;</Dialog.Close>
 
           <RadioGroup value={defaultRoute} onValueChange={handleDefaultChange} className="clock-type-nav">
-            {CLOCK_TYPES.map(({ label, path }) => (
-              <div key={path} className="clock-type-item">
-                <button
-                  className={`clock-type-btn${location.pathname === path ? ' active' : ''}`}
-                  onClick={() => { handleNavigate(path); handleDefaultChange(path) }}
-                >
-                  {label}
-                </button>
-              </div>
-            ))}
+            {CLOCK_TYPES.map(({ label, path }) => {
+              const disabled = path === '/hourglass' && hourglassDisabled
+              return (
+                <div key={path} className="clock-type-item">
+                  <button
+                    className={`clock-type-btn${location.pathname === path ? ' active' : ''}${disabled ? ' disabled' : ''}`}
+                    onClick={() => { if (!disabled) { handleNavigate(path); handleDefaultChange(path) } }}
+                    disabled={disabled}
+                    title={disabled ? 'Remove extra timers and all stopwatches to use Hourglass' : undefined}
+                  >
+                    {label}
+                  </button>
+                </div>
+              )
+            })}
           </RadioGroup>
 
           <div className="dialog-tabs">
