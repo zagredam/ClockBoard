@@ -703,3 +703,54 @@ body.alt{
   padding: 0.3rem 0.5rem;
   color-scheme: dark;
 }
+/* ── Clock drift warning dialog ─────────────────────────────── */
+.drift-warning-popup {
+  width: min(400px, 88vw);
+}
+
+.drift-warning-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 0.75rem;
+  color: #b35000;
+}
+
+.drift-warning-body {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+}
+
+.drift-warning-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ── Main tabs (Display / Server) ───────────────────────────── */
+.main-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 0.75rem 0 0.25rem;
+}
+
+.main-tab {
+  background: transparent;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem 1.4rem;
+  cursor: pointer;
+  opacity: 0.4;
+  letter-spacing: 0.03em;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.main-tab:hover { opacity: 0.7; }
+
+.main-tab.active {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.07);
+}

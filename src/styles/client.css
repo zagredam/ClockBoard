@@ -1,0 +1,150 @@
+.client-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* ── Clock view ─────────────────────────────────────────────── */
+.client-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+}
+
+.client-clock-time {
+  font-size: min(35vw, 70vh);
+  font-weight: bold;
+  color: var(--primaryColor);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+.client-id-badge {
+  font-size: clamp(14px, 2vw, 28px);
+  color: var(--primaryColor);
+  opacity: 0.6;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  user-select: all;
+}
+
+.client-ws-status {
+  font-size: clamp(12px, 1.5vw, 20px);
+  color: var(--primaryColor);
+  opacity: 0.45;
+}
+
+.client-ws-status--error {
+  opacity: 1;
+  color: #e44;
+}
+
+/* ── Full-screen timer / stopwatch ──────────────────────────── */
+.client-fullscreen-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3vh;
+  width: 100%;
+  height: 100%;
+}
+
+.client-item-time {
+  font-size: min(22vw, 42vh);
+  font-weight: bold;
+  color: var(--primaryColor);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+.client-fullscreen-item--expired .client-item-time {
+  animation: client-expire-flash 1s step-start infinite;
+}
+
+@keyframes client-expire-flash {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.client-item-label {
+  font-size: clamp(18px, 3vw, 52px);
+  color: var(--primaryColor);
+  opacity: 0.75;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.client-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 5vw;
+  margin-top: 1vh;
+}
+
+.client-control-icon {
+  font-size: clamp(26px, 4vw, 64px);
+  color: var(--primaryColor);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+
+.client-control-icon:hover {
+  opacity: 1;
+}
+
+/* ── Disconnected badge ─────────────────────────────────────── */
+.client-disconnected-badge {
+  /* position: absolute;
+  bottom: 18px;
+  left: 20px; */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primaryColor);
+  opacity: 0.5;
+  font-size: clamp(88px, 16.4vw, 88px);
+}
+
+.client-disconnected-badge .fa-wifi {
+  position: relative;
+}
+
+.client-disconnected-slash {
+  position: absolute;
+  left: 0;
+  color: #e44;
+  opacity: 0.9;
+}
+
+/* ── Floating theme picker ──────────────────────────────────── */
+.client-theme-picker {
+  position: absolute;
+  bottom: 18px;
+  right: 20px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.client-theme-picker:hover {
+  opacity: 1;
+}
+
+.client-theme-select {
+  background: var(--secondaryColor);
+  color: var(--primaryColor);
+  border: 1px solid var(--primaryColor);
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+}

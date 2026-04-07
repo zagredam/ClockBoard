@@ -9,12 +9,12 @@ import { useSettings } from '../context/SettingsContext'
 import { useAppContext } from '../context/AppContext'
 import { useServerContext } from '../context/ServerContext'
 
-const CLOCK_TYPES = [
+const BASE_CLOCK_TYPES = [
   { label: 'Flipboard', path: '/flipboard' },
-  { label: 'Simple', path: '/clock' },
-  { label: 'Digital', path: '/digital' },
+  { label: 'Simple',    path: '/clock' },
+  { label: 'Digital',   path: '/digital' },
   { label: 'Hourglass', path: '/hourglass' },
-  { label: '95', path: '/win95' },
+  { label: '95',        path: '/win95' },
 ]
 
 function loadDefaultRoute() {
@@ -257,12 +257,24 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
   } = useSettings()
 
   const { containerRef, timers, stopwatches } = useAppContext()
+  const { isConnected } = useServerContext()
   const hourglassDisabled = timers.length > 1 || stopwatches.length > 0
   const navigate = useNavigate()
   const location = useLocation()
 
+  const CLOCK_TYPES = [
+    ...BASE_CLOCK_TYPES,
+    ...(isConnected ? [{ label: 'Client', path: '/client' }, { label: 'Manager', path: '/manager' }] : []),
+  ]
+
   const [defaultRoute, setDefaultRoute] = useState(loadDefaultRoute)
-  const [activeTab, setActiveTab] = useState('settings')
+  const [mainTab, setMainTab] = useState('display')
+  const [subTab, setSubTab]   = useState('settings')
+
+  const switchMain = (id) => {
+    setMainTab(id)
+    if (id === 'display') setSubTab('settings')
+  }
 
   const foundCustom = customThemes.find(c => c.id === 'Custom')
   const [primaryCustomColor, setPrimaryCustomColor] = useState(foundCustom?.primaryColor ?? '#000000')
@@ -285,11 +297,10 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
   const handleNavigate = (path) => { navigate(path); onClose() }
   const handleDefaultChange = (path) => { setDefaultRoute(path); localStorage.setItem('cb_defaultRoute', path) }
 
-  const tabs = [
-    { id: 'settings', label: 'Settings' },
-    ...(onAddTimer ? [{ id: 'timers', label: 'Timers' }] : []),
-    ...(onAddStopwatch ? [{ id: 'stopwatches', label: 'Stopwatches' }] : []),
-    { id: 'server', label: 'Server' },
+  const displaySubTabs = [
+    { id: 'settings',   label: 'Settings' },
+    ...(onAddTimer      ? [{ id: 'timers',      label: 'Timers'      }] : []),
+    ...(onAddStopwatch  ? [{ id: 'stopwatches', label: 'Stopwatches' }] : []),
   ]
 
   return (
@@ -300,110 +311,132 @@ export default function Nav({ isOpen, onClose, onAddTimer, onAddStopwatch }) {
 
           <Dialog.Close className="settings-close">&times;</Dialog.Close>
 
-          <RadioGroup value={defaultRoute} onValueChange={handleDefaultChange} className="clock-type-nav">
-            {CLOCK_TYPES.map(({ label, path }) => {
-              const disabled = path === '/hourglass' && hourglassDisabled
-              return (
-                <div key={path} className="clock-type-item">
-                  <button
-                    className={`clock-type-btn${location.pathname === path ? ' active' : ''}${disabled ? ' disabled' : ''}`}
-                    onClick={() => { if (!disabled) { handleNavigate(path); handleDefaultChange(path) } }}
-                    disabled={disabled}
-                    title={disabled ? 'Remove extra timers and all stopwatches to use Hourglass' : undefined}
-                  >
-                    {label}
-                  </button>
-                </div>
-              )
-            })}
-          </RadioGroup>
-
-          <div className="dialog-tabs">
-            {tabs.map(t => (
+          {/* Main tabs */}
+          <div className="main-tabs">
+            {['display', 'server'].map(id => (
               <button
-                key={t.id}
-                className={`dialog-tab${activeTab === t.id ? ' active' : ''}`}
-                onClick={() => setActiveTab(t.id)}
+                key={id}
+                className={`main-tab${mainTab === id ? ' active' : ''}`}
+                onClick={() => switchMain(id)}
               >
-                {t.label}
+                {id === 'display' ? 'Display' : 'Server'}
               </button>
             ))}
           </div>
 
-          {activeTab === 'settings' && (
-            <div className="settings-rows">
-              <div className="navMenuRow">
-                <strong>Theme</strong>
-                <div className="setting-control">
-                  <select id="themeSelect" value={theme} onChange={(e) => handleThemeChange(e.target.value)}>
-                    <option value="Custom">Custom</option>
-                    {themeOptions.map((t) => (
-                      <option key={t.id} value={t.id}>{t.label}</option>
-                    ))}
-                  </select>
-                  <Switch.Root
-                    className="settings-switch"
-                    checked={altTheme}
-                    onCheckedChange={(checked) => setAltTheme(checked)}
-                  >
+          {mainTab === 'display' && <>
+            <RadioGroup value={defaultRoute} onValueChange={handleDefaultChange} className="clock-type-nav">
+              {CLOCK_TYPES.map(({ label, path }) => {
+                const disabled = path === '/hourglass' && hourglassDisabled
+                return (
+                  <div key={path} className="clock-type-item">
+                    <button
+                      className={`clock-type-btn${location.pathname === path ? ' active' : ''}${disabled ? ' disabled' : ''}`}
+                      onClick={() => {
+                        if (!disabled) {
+                          handleNavigate(path)
+                          handleDefaultChange(path)
+                        }
+                      }}
+                      disabled={disabled}
+                      title={disabled ? 'Remove extra timers and all stopwatches to use Hourglass' : undefined}
+                    >
+                      {label}
+                    </button>
+                  </div>
+                )
+              })}
+            </RadioGroup>
+
+            {/* Subtabs */}
+            <div className="dialog-tabs">
+              {displaySubTabs.map(t => (
+                <button
+                  key={t.id}
+                  className={`dialog-tab${subTab === t.id ? ' active' : ''}`}
+                  onClick={() => setSubTab(t.id)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            {subTab === 'settings' && (
+              <div className="settings-rows">
+                <div className="navMenuRow">
+                  <strong>Theme</strong>
+                  <div className="setting-control">
+                    <select id="themeSelect" value={theme} onChange={(e) => handleThemeChange(e.target.value)}>
+                      <option value="Custom">Custom</option>
+                      {themeOptions.map((t) => (
+                        <option key={t.id} value={t.id}>{t.label}</option>
+                      ))}
+                    </select>
+                    <Switch.Root
+                      className="settings-switch"
+                      checked={altTheme}
+                      onCheckedChange={(checked) => setAltTheme(checked)}
+                    >
+                      <Switch.Thumb className="settings-switch-thumb" />
+                    </Switch.Root>
+                  </div>
+                </div>
+                {theme === 'Custom' && (
+                  <div className="navMenuRow">
+                    <strong>Custom</strong>
+                    <input type="color" value={primaryCustomColor}
+                      onChange={e => setPrimaryCustomColor(e.target.value)}
+                      style={{ width: '60px', height: '40px', cursor: 'pointer', border: '1px solid #ccc', borderRadius: '4px' }}
+                    />
+                    <input type="color" value={secondaryCustomColor}
+                      onChange={e => setSecondaryCustomColor(e.target.value)}
+                      style={{ width: '60px', height: '40px', cursor: 'pointer', border: '1px solid #ccc', borderRadius: '4px' }}
+                    />
+                  </div>
+                )}
+                <div className="navMenuRow">
+                  <strong>Show Date</strong>
+                  <Switch.Root className="settings-switch" checked={showDate} onCheckedChange={setShowDate}>
                     <Switch.Thumb className="settings-switch-thumb" />
                   </Switch.Root>
                 </div>
-              </div>
-              {theme === 'Custom' && (
                 <div className="navMenuRow">
-                  <strong>Custom</strong>
-                  <input type="color" value={primaryCustomColor}
-                    onChange={e => setPrimaryCustomColor(e.target.value)}
-                    style={{ width: '60px', height: '40px', cursor: 'pointer', border: '1px solid #ccc', borderRadius: '4px' }}
-                  />
-                  <input type="color" value={secondaryCustomColor}
-                    onChange={e => setSecondaryCustomColor(e.target.value)}
-                    style={{ width: '60px', height: '40px', cursor: 'pointer', border: '1px solid #ccc', borderRadius: '4px' }}
-                  />
+                  <strong>Show Seconds</strong>
+                  <Switch.Root className="settings-switch" checked={showSeconds} onCheckedChange={setShowSeconds}>
+                    <Switch.Thumb className="settings-switch-thumb" />
+                  </Switch.Root>
                 </div>
-              )}
-              <div className="navMenuRow">
-                <strong>Show Date</strong>
-                <Switch.Root className="settings-switch" checked={showDate} onCheckedChange={setShowDate}>
-                  <Switch.Thumb className="settings-switch-thumb" />
-                </Switch.Root>
-              </div>
-              <div className="navMenuRow">
-                <strong>Show Seconds</strong>
-                <Switch.Root className="settings-switch" checked={showSeconds} onCheckedChange={setShowSeconds}>
-                  <Switch.Thumb className="settings-switch-thumb" />
-                </Switch.Root>
-              </div>
-              <div className="navMenuRow">
-                <strong>Show AM/PM</strong>
-                <Switch.Root className="settings-switch" checked={showMeridum} onCheckedChange={setShowMeridum}>
-                  <Switch.Thumb className="settings-switch-thumb" />
-                </Switch.Root>
-              </div>
-              {location.pathname === '/hourglass' && (
                 <div className="navMenuRow">
-                  <strong>Interval</strong>
-                  <div className="setting-control">
-                    <select id="hourglassSelect" value={hourglassInterval} onChange={(e) => setHourglassInterval(e.target.value)}>
-                      <option value={60}>Per minute</option>
-                      <option value={60*5}>Every 5 minutes</option>
-                      <option value={60*10}>Every 10 minutes</option>
-                      <option value={60*15}>Every 15 minutes</option>
-                      <option value={3600}>Per hour</option>
-                      <option value={86400}>Per Day</option>
-                      <option value="monthly">Monthly</option>
-                      <option value="yearly">Yearly</option>
-                    </select>
+                  <strong>Show AM/PM</strong>
+                  <Switch.Root className="settings-switch" checked={showMeridum} onCheckedChange={setShowMeridum}>
+                    <Switch.Thumb className="settings-switch-thumb" />
+                  </Switch.Root>
+                </div>
+                {location.pathname === '/hourglass' && (
+                  <div className="navMenuRow">
+                    <strong>Interval</strong>
+                    <div className="setting-control">
+                      <select id="hourglassSelect" value={hourglassInterval} onChange={(e) => setHourglassInterval(e.target.value)}>
+                        <option value={60}>Per minute</option>
+                        <option value={60*5}>Every 5 minutes</option>
+                        <option value={60*10}>Every 10 minutes</option>
+                        <option value={60*15}>Every 15 minutes</option>
+                        <option value={3600}>Per hour</option>
+                        <option value={86400}>Per Day</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )}
 
-          {activeTab === 'timers' && <TimersTab onAddTimer={onAddTimer} />}
-          {activeTab === 'stopwatches' && <StopwatchesTab onAddStopwatch={onAddStopwatch} />}
-          {activeTab === 'server' && <ServerTab />}
+            {subTab === 'timers'      && <TimersTab onAddTimer={onAddTimer} />}
+            {subTab === 'stopwatches' && <StopwatchesTab onAddStopwatch={onAddStopwatch} />}
+          </>}
+
+          {mainTab === 'server' && <ServerTab />}
 
         </Dialog.Popup>
       </Dialog.Portal>

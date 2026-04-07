@@ -1,78 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
-import TimersSection from '../components/TimersSection'
+import DigitalDigit from '../components/DigitalDigit'
 import { useSettings } from '../context/SettingsContext'
 import { useAppContext } from '../context/AppContext'
-import "../styles/digital.css";
+import "../styles/digital.css"
 
 const WEEKDAYS_SHORT = ['SUN', 'MON', 'TUES', 'WED', 'THURS', 'FRI', 'SAT']
 const WEEKDAYS_FULL  = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
 const MONTHS_SHORT   = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEPT', 'OCT', 'NOV', 'DEC']
 const MONTHS_FULL    = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER']
-
-// slot order: [lt, lb, top, mid-left, mid-right, bot, rt, rb, center-top, center-bottom, diag-ul, diag-ur, diag-ll, diag-lr]
-const digitNumberMapping = [
-    [true,  true,  true,  false, false, true,  true,  true,  false, false, false, false, false, false], // 0
-    [false, false, false, false, false, false, true,  true,  false, false, false, false, false, false], // 1
-    [false, true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false], // 2
-    [false, false, true,  true,  true,  true,  true,  true,  false, false, false, false, false, false], // 3
-    [true,  false, false, true,  true,  false, true,  true,  false, false, false, false, false, false], // 4
-    [true,  false, true,  true,  true,  true,  false, true,  false, false, false, false, false, false], // 5
-    [true,  true,  true,  true,  true,  true,  false, true,  false, false, false, false, false, false], // 6
-    [false, false, true,  false, false, false, true,  true,  false, false, false, false, false, false], // 7
-    [true,  true,  true,  true,  true,  true,  true,  true,  false, false, false, false, false, false], // 8
-    [true,  false, true,  true,  true,  true,  true,  true,  false, false, false, false, false, false], // 9
-]
-
-const letterSegmentMapping = {
-    //       lt     lb     top    ml     mr     bot    rt     rb     ct     cb     dul    dur    dll    dlr
-    'A': [true,  true,  true,  true,  true,  false, true,  true,  false, false, false, false, false, false],
-    'B': [true,  true,  false, true,  true,  true,  false, true,  false, false, false, false, false, false],
-    'C': [true,  true,  true,  false, false, true,  false, false, false, false, false, false, false, false],
-    'D': [false, false, true,  false, false, true,  true,  true,  true,  true,  false, false, false, false],
-    'E': [true,  true,  true,  true,  true,  true,  false, false, false, false, false, false, false, false],
-    'F': [true,  true,  true,  true,  true,  false, false, false, false, false, false, false, false, false],
-    'G': [true,  true,  true,  false, true,  true,  false, true,  false, false, false, false, false, false],
-    'H': [true,  true,  false, true,  true,  false, true,  true,  false, false, false, false, false, false],
-    'I': [false, false, true,  false, false, true,  false, false, true,  true,  false, false, false, false],
-    'J': [false, true,  false, false, false, true,  true,  true,  false, false, false, false, false, false],
-    'K': [true,  true,  false, true,  false, false, false, false, false, false, false, true,  false, true ],
-    'L': [true,  true,  false, false, false, true,  false, false, false, false, false, false, false, false],
-    'M': [true,  true,  false, false, false, false, true,  true,  false, false, true,  true,  false, false],
-    'N': [true,  true,  false, false, false, false, true,  true,  false, false, true,  false, false, true ],
-    'O': [true,  true,  true,  false, false, true,  true,  true,  false, false, false, false, false, false],
-    'P': [true,  true,  true,  true,  true,  false, true,  false, false, false, false, false, false, false],
-    'Q': [true,  true,  true,  false, false, true,  true,  true,  false, false, false, false, false, true ],
-    'R': [true,  true,  true,  true,  true,  false, true,  false, false, false, false, false, false, true ],
-    'S': [true,  false, true,  true,  true,  true,  false, true,  false, false, false, false, false, false],
-    'T': [false, false, true,  false, false, false, false, false, true,  true,  false, false, false, false],
-    'U': [true,  true,  false, false, false, true,  true,  true,  false, false, false, false, false, false],
-    'V': [true,  true,  false, false, false, false, false, false, false, false, false, true,  true,  false],
-    'W': [true,  true,  false, false, false, false, true,  true,  false, false, false, false, true,  true ],
-    'X': [false, false, false, false, false, false, false, false, false, false, true,  true,  true,  true ],
-    'Y': [false, false, false, false, false, false, false, false, false, true,  true,  true,  false, false],
-    'Z': [false, false, true,  false, false, true,  false, false, false, false, false, true,  true,  false],
-    '-': [false, false, false, true,  true,  false, false, false, false, false, false, false, false, false],
-}
-
-const DigitalDigit = ({digit}) => {
-  const mapping = (isNaN(digit) ? letterSegmentMapping[digit] : digitNumberMapping[digit]) ?? [false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-  return <div className="digital-digit">
-    <div className={`digital-digit-slot digital-digit-slot-vertical       digital-digit-slot-left-top      ${mapping[0]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-vertical       digital-digit-slot-left-bottom   ${mapping[1]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-horizontal     digital-digit-slot-middle-top    ${mapping[2]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-horizontal-half digital-digit-slot-middle-left  ${mapping[3]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-horizontal-half digital-digit-slot-middle-right ${mapping[4]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-horizontal     digital-digit-slot-middle-bottom ${mapping[5]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-vertical       digital-digit-slot-right-top     ${mapping[6]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-vertical       digital-digit-slot-right-bottom  ${mapping[7]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-vertical       digital-digit-slot-center-top    ${mapping[8]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-vertical       digital-digit-slot-center-bottom ${mapping[9]  && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-diagonal       digital-digit-slot-diag-ul       ${mapping[10] && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-diagonal       digital-digit-slot-diag-ur       ${mapping[11] && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-diagonal       digital-digit-slot-diag-ll       ${mapping[12] && "active"}`}></div>
-    <div className={`digital-digit-slot digital-digit-slot-diagonal       digital-digit-slot-diag-lr       ${mapping[13] && "active"}`}></div>
-  </div>
-}
 
 function buildFullDateChars(date) {
   const day   = WEEKDAYS_FULL[date.getDay()].split('')
@@ -82,6 +17,77 @@ function buildFullDateChars(date) {
   const y     = String(date.getFullYear()).split('')
   return [...day, ' ', ...month, ' ', d1, d2, ',', ' ', ...y]
 }
+
+// ── Digital timer/stopwatch items ────────────────────────────
+
+function DigitalTimerItem({ timer, showControls, onClose, onReset, onToggle }) {
+  const diffInSeconds = timer.paused
+    ? (timer.timeLeft || 0)
+    : (timer.timeToExp - Date.now()) / 1000
+
+  const expired = diffInSeconds < 0
+  const hours   = expired ? 0 : Math.floor(diffInSeconds / 3600)
+  const minutes = expired ? 0 : Math.floor((diffInSeconds % 3600) / 60)
+  const seconds = expired ? 0 : Math.floor(diffInSeconds % 60)
+
+  return (
+    <div className={`digital-item${expired ? ' digital-item--expired' : ''}`}>
+      <div className="digital-digit-group digital-digit-group--item">
+        {hours > 0 && <>
+          <DigitalDigit digit={String(Math.floor(hours / 10))} />
+          <DigitalDigit digit={String(hours % 10)} />
+          <span className="digit-sep"> </span>
+        </>}
+        <DigitalDigit digit={String(Math.floor(minutes / 10))} />
+        <DigitalDigit digit={String(minutes % 10)} />
+        <span className="digit-sep"> </span>
+        <DigitalDigit digit={String(Math.floor(seconds / 10))} />
+        <DigitalDigit digit={String(seconds % 10)} />
+      </div>
+      {timer.label && <div className="digital-item-label">{timer.label}</div>}
+      <div className={`buttons${showControls ? ' show' : ''}`}>
+        <i className="fas fa-undo-alt actionIcon" onClick={onReset} />
+        <i className="far fa-window-close actionIcon" onClick={onClose} />
+        <i className={`fas ${timer.paused ? 'fa-play' : 'fa-pause'} actionIcon`} onClick={onToggle} />
+      </div>
+    </div>
+  )
+}
+
+function DigitalStopwatchItem({ stopwatch, showControls, onClose, onReset, onToggle }) {
+  const diffInSeconds = stopwatch.paused
+    ? stopwatch.pausedDiff / 1000
+    : (Date.now() - stopwatch.markedTime + stopwatch.pausedDiff) / 1000
+
+  const hours   = Math.floor(diffInSeconds / 3600)
+  const minutes = Math.floor((diffInSeconds % 3600) / 60)
+  const seconds = Math.floor(diffInSeconds % 60)
+
+  return (
+    <div className="digital-item">
+      <div className="digital-digit-group digital-digit-group--item">
+        {hours > 0 && <>
+          <DigitalDigit digit={String(Math.floor(hours / 10))} />
+          <DigitalDigit digit={String(hours % 10)} />
+          <span className="digit-sep"> </span>
+        </>}
+        <DigitalDigit digit={String(Math.floor(minutes / 10))} />
+        <DigitalDigit digit={String(minutes % 10)} />
+        <span className="digit-sep"> </span>
+        <DigitalDigit digit={String(Math.floor(seconds / 10))} />
+        <DigitalDigit digit={String(seconds % 10)} />
+      </div>
+      {stopwatch.label && <div className="digital-item-label">{stopwatch.label}</div>}
+      <div className={`buttons${showControls ? ' show' : ''}`}>
+        <i className="fas fa-undo-alt actionIcon" onClick={onReset} />
+        <i className="far fa-window-close actionIcon" onClick={onClose} />
+        <i className={`fas ${stopwatch.paused ? 'fa-play' : 'fa-pause'} actionIcon`} onClick={onToggle} />
+      </div>
+    </div>
+  )
+}
+
+// ── Main page ────────────────────────────────────────────────
 
 export default function Digital() {
   const { showSeconds, showMeridum, showDate } = useSettings()
@@ -93,12 +99,10 @@ export default function Digital() {
   } = useAppContext()
 
   const [time, setTime] = useState(new Date())
-
-  // dateAnimChars: null = show normal abbreviated display
-  // otherwise: array of chars to render as DigitalDigit components
   const [dateAnimChars, setDateAnimChars] = useState(null)
   const animCleanupRef = useRef([])
 
+  // Clock + timer tick
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 200)
     return () => clearInterval(interval)
@@ -110,31 +114,41 @@ export default function Digital() {
 
     const now = new Date()
     const fullChars  = buildFullDateChars(now)
-    const introChars = fullChars.map((_, i) => i % 2 === 0 ? 'X' : '-')
+    const introChars = Array.from({ length: 17 }, () => ' ')
 
-    // Phase 1: alternating X / —
-    setDateAnimChars(introChars)
+    let combined = [...introChars, ...fullChars]
+    setDateAnimChars([...combined])
 
-    // Phase 2: full expanded date after 700 ms
-    const t1 = setTimeout(() => {
-      setDateAnimChars([...fullChars])
+    const introInterval = setInterval(() => {
+      combined = combined.slice(1)
+      setDateAnimChars([...combined])
 
-      // Phase 3: pop characters off the right end every 350 ms
-      let remaining = [...fullChars]
-      const popInterval = setInterval(() => {
-        remaining = remaining.slice(0, -1)
-        if (remaining.length === 0) {
-          clearInterval(popInterval)
-          setDateAnimChars(null) // Phase 4: back to normal abbreviated display
-        } else {
-          setDateAnimChars([...remaining])
-        }
-      }, 350)
+      if (combined.length <= fullChars.length) {
+        clearInterval(introInterval)
 
-      animCleanupRef.current.push(() => clearInterval(popInterval))
-    }, 700)
+        const holdTimeout = setTimeout(() => {
+          let current = [...fullChars]
+          let slashCount = 0
+          const popInterval = setInterval(() => {
+            current = current.slice(1)
+            current.push(' ')
+            slashCount++
+            const allSlashes = current.every(c => c === '\\' || c === '/' || c === ' ')
+            if (allSlashes) {
+              clearInterval(popInterval)
+              setDateAnimChars(null)
+            } else {
+              setDateAnimChars([...current])
+            }
+          }, 350)
+          animCleanupRef.current.push(() => clearInterval(popInterval))
+        }, 700)
 
-    animCleanupRef.current.push(() => clearTimeout(t1))
+        animCleanupRef.current.push(() => clearTimeout(holdTimeout))
+      }
+    }, 350)
+
+    animCleanupRef.current.push(() => clearInterval(introInterval))
 
     return () => {
       animCleanupRef.current.forEach(fn => fn())
@@ -170,7 +184,7 @@ export default function Digital() {
       {showDate && (
         <div className="digital-digit-group digital-digit-group--date">
           {dateAnimChars !== null
-            ? dateAnimChars.map((char, i) => <DigitalDigit key={i} digit={char} />)
+            ? dateAnimChars.slice(0, 17).map((char, i) => <DigitalDigit key={i} digit={char} />)
             : <>
                 <DigitalDigit digit={WEEKDAYS_SHORT[time.getDay()][0]} />
                 <DigitalDigit digit={WEEKDAYS_SHORT[time.getDay()][1]} />
@@ -196,17 +210,26 @@ export default function Digital() {
 
       {hasTimers && (
         <div className="digital-timers-section">
-          <TimersSection
-            timers={timers}
-            stopwatches={stopwatches}
-            showControls={showControls}
-            onCloseTimer={closeTimer}
-            onResetTimer={resetTimer}
-            onToggleTimer={toggleTimer}
-            onCloseStopwatch={closeStopwatch}
-            onResetStopwatch={resetStopwatch}
-            onToggleStopwatch={toggleStopwatch}
-          />
+          {timers.map(timer => (
+            <DigitalTimerItem
+              key={timer.id}
+              timer={timer}
+              showControls={showControls}
+              onClose={() => closeTimer(timer.id)}
+              onReset={() => resetTimer(timer.id)}
+              onToggle={() => toggleTimer(timer.id)}
+            />
+          ))}
+          {stopwatches.map(sw => (
+            <DigitalStopwatchItem
+              key={sw.id}
+              stopwatch={sw}
+              showControls={showControls}
+              onClose={() => closeStopwatch(sw.id)}
+              onReset={() => resetStopwatch(sw.id)}
+              onToggle={() => toggleStopwatch(sw.id)}
+            />
+          ))}
         </div>
       )}
     </div>
