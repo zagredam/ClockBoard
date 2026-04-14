@@ -1,0 +1,117 @@
+# ClockBoard
+
+> A React + Vite web app that shows the current time in five distinctive visual styles with integrated multi-timer and stopwatch support.
+
+## What it does
+
+ClockBoard renders a full-screen clock in one of five modes the user can switch between at any time:
+
+- **Simple** (`/`) — clean digital clock
+- **Flipboard** (`/flipboard`) — animated flip-board digits (split-flap display)
+- **Digital** (`/digital`) — seven-segment LED-style display
+- **Hourglass** (`/hourglass`) — animated sand falling in real time
+- **Win95** (`/win95`) — Windows 95 retro desktop with draggable windows
+
+Alongside the clock, users can create and run multiple countdown timers (with labels, presets, and an audio alert on completion) and stopwatches simultaneously.
+
+## Tech stack
+
+- React 18 + React Router 6
+- Vite 5 (build tool / dev server)
+- React Context API (state management)
+- localStorage (persistence)
+- Plain CSS with custom properties (theming)
+- `@base-ui-components/react` for accessible primitives
+- FontAwesome 5 for icons
+
+## Source layout
+
+```
+src/
+  App.jsx                  # Routes and top-level providers
+  main.jsx                 # ReactDOM entry point
+  components/
+    Clock.jsx              # Digital clock face
+    Nav.jsx                # Sidebar navigation + settings trigger
+    FlipDigit.jsx          # Animated flip-card digit
+    FlipLabel.jsx          # Animated flip-card label
+    Timer.jsx              # Single countdown timer
+    Stopwatch.jsx          # Single stopwatch
+    TimersSection.jsx      # Container for all timers and stopwatches
+  pages/
+    ClockBoard.jsx         # Simple clock page
+    Airport.jsx            # Flip-board page
+    Digital.jsx            # Seven-segment page
+    Hourglass.jsx          # Hourglass page
+    Win95.jsx              # Win95 retro page
+  context/
+    AppContext.jsx         # Timers, stopwatches, fullscreen, UI state
+    SettingsContext.jsx    # Theme, display toggles (seconds, AM/PM, date)
+    ServerContext.jsx      # Optional backend sync + time drift correction
+  data/
+    teams.js               # 32 NFL team color palettes + custom theme slot
+  styles/
+    airport.css
+    digital.css
+    hourglass.css
+    win95.css
+assets/
+  styles/styles.css        # Global styles + CSS variable definitions
+  media/fonts/             # Endzone Sans, Ubuntu Mono, Droid Sans Mono
+  media/timer.mp3          # Completion chime
+```
+
+## State management
+
+Three React Context providers wrap the app:
+
+| Context | Responsibility |
+|---|---|
+| `AppContext` | Active timers list, active stopwatches list, fullscreen flag, control-panel visibility |
+| `SettingsContext` | Selected theme, alt-theme flag, showSeconds, showMeridiem, showDate, hourglassInterval, defaultRoute |
+| `ServerContext` | Server URL, request headers, calculated time drift from `worldtimeapi.org` |
+
+All context consumers use `useContext`; no prop drilling for global state.
+
+## Persistence (localStorage keys)
+
+| Key | Value |
+|---|---|
+| `cb_timers` | JSON array of timer objects |
+| `cb_stopwatches` | JSON array of stopwatch objects |
+| `cb_theme` | Theme name string |
+| `cb_altTheme` | Boolean — swap primary/secondary colors |
+| `cb_showSeconds` | Boolean |
+| `cb_showMeridum` | Boolean |
+| `cb_showDate` | Boolean |
+| `cb_hourglassInterval` | `"hourly"` \| `"daily"` \| `"monthly"` \| `"yearly"` |
+| `cb_defaultRoute` | Route path string |
+| `cb_serverUrl` | Optional backend URL |
+| `cb_serverHeaders` | JSON string of HTTP headers |
+
+## Theming
+
+Themes are applied by setting CSS custom properties on `:root`:
+- `--primary` and `--secondary` — main brand colors
+- Derived variables for backgrounds, text, borders, etc.
+
+The `altTheme` flag swaps `--primary` and `--secondary`. Users can also create fully custom themes by picking arbitrary colors.
+
+NFL team themes are defined in `src/data/teams.js` as `{ name, primary, secondary }` objects for all 32 teams.
+
+## Notable implementation details
+
+- **Time drift correction** — `ServerContext` fetches from `worldtimeapi.org`, measures round-trip latency, and computes offset to keep the displayed time accurate.
+- **Gamepad support** — `GamepadService.js` is a singleton that polls the Gamepad API and dispatches custom events consumed by the app.
+- **Flip animation** — `FlipDigit` uses CSS 3D transforms and a two-phase animation (top half flips down, bottom half reveals) to replicate a mechanical split-flap display.
+- **Win95 z-ordering** — a module-level `let zTop = 100` counter increments whenever a window is focused, applied as inline `z-index`.
+- **Auto-hiding controls** — the control panel fades out after 2 seconds of mouse inactivity using a `setTimeout` cleared on `mousemove`.
+
+## Running locally
+
+```bash
+npm install
+npm run dev       # http://localhost:5173
+npm run build     # outputs to dist/
+npm run preview   # serve the dist/ build
+```
