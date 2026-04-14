@@ -10,6 +10,13 @@ import React from 'react'
 import Digital from './pages/Digital'
 import Win95 from './pages/Win95'
 
+const VALID_ROUTES = new Set(['/clock', '/flipboard', '/hourglass', '/digital', '/win95'])
+
+function getDefaultRoute() {
+  const stored = localStorage.getItem('cb_defaultRoute')
+  return (stored && VALID_ROUTES.has(stored)) ? stored : '/flipboard'
+}
+
 function AppShell() {
   const {
     navOpen, setNavOpen,
@@ -108,12 +115,13 @@ function AppShell() {
         onAddStopwatch={addStopwatch}
       />
       <Routes>
-        <Route path="/" element={<Navigate to={localStorage.getItem('cb_defaultRoute') || '/flipboard'} replace />} />
+        <Route path="/" element={<Navigate to={getDefaultRoute()} replace />} />
         <Route path="/clock" element={<ClockBoard />} />
         <Route path="/flipboard" element={<Airport />} />
         <Route path="/hourglass" element={<Hourglass />} />
         <Route path="/digital" element={<Digital />} />
         <Route path="/win95" element={<Win95 />} />
+        <Route path="*" element={<Navigate to="/flipboard" replace />} />
       </Routes>
     </div>
   )

@@ -4,7 +4,7 @@ A full-screen clock web app with five visual styles, multi-timer support, and 32
 
 ## Features
 
-- **5 clock modes** — Simple, Airport (flip-board), Digital (seven-segment LED), Hourglass, Win95 retro
+- **5 clock modes** — Simple, Flipboard, Digital (seven-segment LED), Hourglass, Win95 retro
 - **Timers & stopwatches** — create multiple at once with labels, presets (20s / 5m / 25m / 1h), and an audio completion alert
 - **Theming** — 32 NFL team color palettes or fully custom colors, with a primary/secondary swap toggle
 - **Display options** — toggle seconds, AM/PM, and date visibility
@@ -29,7 +29,7 @@ npm run preview   # Preview production build
 | Mode | Route | Description |
 |---|---|---|
 | Simple | `/` | Clean digital clock |
-| Airport | `/airport` | Animated split-flap flip-board digits |
+| Flipboard | `/flipboard` | Animated split-flap flip-board digits |
 | Digital | `/digital` | Seven-segment LED display |
 | Hourglass | `/hourglass` | Animated sand falling in real time |
 | Win95 | `/win95` | Windows 95 retro desktop with draggable windows |
@@ -47,7 +47,7 @@ npm run preview   # Preview production build
 ```
 src/
   components/    # Clock, Nav, FlipDigit, Timer, Stopwatch, TimersSection
-  pages/         # ClockBoard, Airport, Digital, Hourglass, Win95
+  pages/         # ClockBoard, Flipboard, Digital, Hourglass, Win95
   context/       # AppContext, SettingsContext, ServerContext
   data/teams.js  # NFL team color definitions
 assets/

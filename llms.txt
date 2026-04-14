@@ -7,7 +7,7 @@
 ClockBoard renders a full-screen clock in one of five modes the user can switch between at any time:
 
 - **Simple** (`/`) — clean digital clock
-- **Airport** (`/airport`) — animated flip-board digits (split-flap display)
+- **Flipboard** (`/flipboard`) — animated flip-board digits (split-flap display)
 - **Digital** (`/digital`) — seven-segment LED-style display
 - **Hourglass** (`/hourglass`) — animated sand falling in real time
 - **Win95** (`/win95`) — Windows 95 retro desktop with draggable windows

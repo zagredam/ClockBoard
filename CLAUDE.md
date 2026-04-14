@@ -17,7 +17,7 @@ npm run preview   # Preview production build
 ```
 src/
   components/     # Reusable UI primitives (Clock, Nav, FlipDigit, Timer, Stopwatch, etc.)
-  pages/          # Full-page clock views (ClockBoard, Airport, Digital, Hourglass, Win95)
+  pages/          # Full-page clock views (ClockBoard, Flipboard, Digital, Hourglass, Win95)
   context/        # React Context providers (AppContext, SettingsContext, ServerContext)
   data/teams.js   # NFL team color themes (32 teams + custom)
   styles/         # Page-specific CSS files
@@ -32,7 +32,7 @@ assets/
 ### Routing (App.jsx)
 Each clock mode is a route:
 - `/` → `ClockBoard` (simple digital)
-- `/airport` → flip-board animation
+- `/flipboard` → flip-board animation
 - `/digital` → seven-segment LED
 - `/hourglass` → animated sand
 - `/win95` → Windows 95 retro desktop
