@@ -154,16 +154,27 @@ body.alt .digital-digit-slot::before{
 
 @keyframes sep-blink {
   from, to { opacity: 1; }
-  50%       { opacity: 0; }
+  50%       { opacity: .4; }
 }
 
 .digit-sep {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 12vh;
+  font-size: min(20vh, 10vw);
+  flex: 0 0 20px;
+  width: 20px;
+  overflow: visible;
+  line-height: 1;
   color: var(--primaryColor);
   user-select: none;
-  align-self: center;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation: sep-blink 1s step-end infinite;
+}
+
+.digital-digit-group--compact .digit-sep {
+  font-size: min(10vh, 5vw);
 }
 
 /* .digital-digit-group--compact .digit-sep {

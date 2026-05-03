@@ -60,23 +60,23 @@ function BoardRow({ item, type, now, dayDigits, onClose, onReset, onToggle }) {
         <div className="board-digits" style={{ width: daysColumnWidth(dayDigits) }}>
           {padN(days, dayDigits).split('').map((ch, i) => <FlipDigit key={i} digit={ch} />)}
         </div>
-        <span className="board-sep">:</span>
+        <span className="board-sep"> </span>
       </>}
       <div className="board-digits board-digits--2">
         {pad2(hours).split('').map((ch, i) => <FlipDigit key={i} digit={ch} />)}
       </div>
-      <span className="board-sep">:</span>
+      <span className="board-sep"> </span>
       <div className="board-digits board-digits--2">
         {pad2(minutes).split('').map((ch, i) => <FlipDigit key={i} digit={ch} />)}
       </div>
-      <span className="board-sep">:</span>
+      <span className="board-sep"> </span>
       <div className="board-digits board-digits--2">
         {pad2(seconds).split('').map((ch, i) => <FlipDigit key={i} digit={ch} />)}
       </div>
       <div className="board-row-controls">
-        <i className="fas fa-undo-alt actionIcon" onClick={onReset} />
+        <i className={`fas ${item.paused ? 'fa-play' : 'fa-pause'} actionIcon`} onClick={onToggle} />&nbsp;
+        <i className="fas fa-undo-alt actionIcon" onClick={onReset} />&nbsp;
         <i className="far fa-window-close actionIcon" onClick={onClose} />
-        <i className={`fas ${item.paused ? 'fa-play' : 'fa-pause'} actionIcon`} onClick={onToggle} />
       </div>
     </div>
   )
@@ -139,11 +139,13 @@ export default function Airport() {
         <div className="airport-clock">
           <FlipDigit digit={String(Math.floor(h / 10))} />
           <FlipDigit digit={String(h % 10)} />
-          <span className="airport-sep">:</span>
+          <span className="airport-sep"> </span>
+          <span className="airport-sep"> </span>
           <FlipDigit digit={String(Math.floor(m / 10))} />
           <FlipDigit digit={String(m % 10)} />
           {showSeconds && <>
-            <span className="airport-sep">:</span>
+            <span className="airport-sep"> </span>
+          <span className="airport-sep"> </span>
             <FlipDigit digit={String(Math.floor(s / 10))} />
             <FlipDigit digit={String(s % 10)} />
           </>}
@@ -182,23 +184,23 @@ export default function Airport() {
             <div className="board-indicator-dot" />
             <div className="board-indicator-dot" />
           </div>
-          <div className="board-digits board-digits--name">
-            <span className="board-hdr">NAME</span>
+          <div className="board-digits board-digits--name text-left">
+            {/* <span className="board-hdr">NAME</span> */}
           </div>
           {dayDigits > 0 && <>
             <div className="board-digits" style={{ width: dayColWidth }}>
               <span className="board-hdr">DAYS</span>
             </div>
-            <span className="board-sep board-sep--ghost">:</span>
+            {/* <span className="board-sep board-sep--ghost">:</span> */}
           </>}
           <div className="board-digits board-digits--2">
             <span className="board-hdr">HRS</span>
           </div>
-          <span className="board-sep board-sep--ghost">:</span>
+          {/* <span className="board-sep board-sep--ghost">:</span> */}
           <div className="board-digits board-digits--2">
             <span className="board-hdr">MIN</span>
           </div>
-          <span className="board-sep board-sep--ghost">:</span>
+          {/* <span className="board-sep board-sep--ghost">:</span> */}
           <div className="board-digits board-digits--2">
             <span className="board-hdr">SEC</span>
           </div>
@@ -223,11 +225,13 @@ export default function Airport() {
         <div className="airport-clock">
           <FlipDigit digit={String(Math.floor(h / 10))} />
           <FlipDigit digit={String(h % 10)} />
-          <span className="airport-sep">:</span>
+          <span className="airport-sep">  </span>
+          {/* <span className="airport-sep">:</span> */}
           <FlipDigit digit={String(Math.floor(m / 10))} />
           <FlipDigit digit={String(m % 10)} />
           {showSeconds && <>
-            <span className="airport-sep">:</span>
+            {/* <span className="airport-sep">:</span> */}
+          <span className="airport-sep">  </span>
             <FlipDigit digit={String(Math.floor(s / 10))} />
             <FlipDigit digit={String(s % 10)} />
           </>}

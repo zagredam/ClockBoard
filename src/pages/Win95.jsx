@@ -31,7 +31,7 @@ function useDrag(ix, iy) {
   return [pos, onMouseDown]
 }
 
-function AnalogClock({ time }) {
+function AnalogClock({ time, showSeconds, showAMPM }) {
   function toXY(deg, r) {
     const rad = (deg - 90) * Math.PI / 180
     return { x: 100 + r * Math.cos(rad), y: 100 + r * Math.sin(rad) }
@@ -83,12 +83,13 @@ function AnalogClock({ time }) {
       <line x1="100" y1="100" x2={minTip.x} y2={minTip.y}
         stroke="#000" strokeWidth="3" strokeLinecap="round" />
       {/* Second hand */}
-      <line x1={secTail.x} y1={secTail.y} x2={secTip.x} y2={secTip.y}
-        stroke="#c00000" strokeWidth="1.5" strokeLinecap="round" />
+      {showSeconds && <line x1={secTail.x} y1={secTail.y} x2={secTip.x} y2={secTip.y}
+        stroke="#c00000" strokeWidth="1.5" strokeLinecap="round" />}
 
       {/* Center */}
       <circle cx="100" cy="100" r="4" fill="#000" />
       <circle cx="100" cy="100" r="2" fill="#c00000" />
+      {showAMPM && <text x={92} y={150}>{time.getHours() > 11 ? "PM" : "AM"}</text>}
     </svg>
   )
 }
@@ -240,7 +241,7 @@ export default function Win95() {
     closeTimer, resetTimer, toggleTimer,
     closeStopwatch, resetStopwatch, toggleStopwatch,
   } = useAppContext()
-  const { showDate } = useSettings()
+  const { showDate, showSeconds, showMeridum } = useSettings()
 
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 200)
@@ -273,7 +274,7 @@ export default function Win95() {
       >
         <div className="win95-clock-body">
           {showDate && <Calendar time={time} />}
-          <AnalogClock time={time} />
+          <AnalogClock showSeconds={showSeconds} showAMPM={showMeridum} time={time} />
         </div>
       </Win95Window>
 
