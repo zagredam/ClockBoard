@@ -74,6 +74,12 @@ const DigitalDigit = ({digit}) => {
   </div>
 }
 
+// Matches the number of DigitalDigit elements in the static abbreviated display:
+// 4 weekday + 1 space + 4 month + 1 space + 2 date + 1 comma + 4 year = 17
+const MIN_DATE_DIGITS = 17
+const DATE_FRONT_PAD = Array(MIN_DATE_DIGITS).fill(' ')
+const DATE_BACK_PAD  = Array(4).fill(' ')
+
 function buildFullDateChars(date) {
   const day   = WEEKDAYS_FULL[date.getDay()].split('')
   const month = MONTHS_FULL[date.getMonth()].split('')
@@ -94,7 +100,7 @@ export default function Digital() {
 
   const [time, setTime] = useState(new Date())
 
-  // dateAnimChars: null = show normal abbreviated display
+  // dateAnimChars: null = show normal abbreviated display (17 digits)
   // otherwise: array of chars to render as DigitalDigit components
   const [dateAnimChars, setDateAnimChars] = useState(null)
   const animCleanupRef = useRef([])
@@ -109,21 +115,25 @@ export default function Digital() {
     if (!showDate) return
 
     const now = new Date()
-    const fullChars  = buildFullDateChars(now)
-    const introChars = fullChars.map((_, i) => i % 2 === 0 ? 'X' : '-')
+    const fullChars    = buildFullDateChars(now)
+    // Pad full date with leading and trailing blanks so the row never shrinks
+    // below MIN_DATE_DIGITS during the pop phase
+    const paddedChars  = [...DATE_FRONT_PAD, ...fullChars, ...DATE_BACK_PAD]
+    const introChars   = paddedChars.map((_, i) => i % 2 === 0 ? 'X' : '-')
 
-    // Phase 1: alternating X / —
+    // Phase 1: alternating X / — (same width as padded full date)
     setDateAnimChars(introChars)
 
-    // Phase 2: full expanded date after 700 ms
+    // Phase 2: full expanded (padded) date after 700 ms
     const t1 = setTimeout(() => {
-      setDateAnimChars([...fullChars])
+      setDateAnimChars([...paddedChars])
 
-      // Phase 3: pop characters off the right end every 350 ms
-      let remaining = [...fullChars]
+      // Phase 3: pop characters off the right end every 350 ms;
+      // stop once only the front-pad blanks remain (length === MIN_DATE_DIGITS)
+      let remaining = [...paddedChars]
       const popInterval = setInterval(() => {
         remaining = remaining.slice(0, -1)
-        if (remaining.length === 0) {
+        if (remaining.length <= MIN_DATE_DIGITS && remaining.every(c => c === ' ')) {
           clearInterval(popInterval)
           setDateAnimChars(null) // Phase 4: back to normal abbreviated display
         } else {

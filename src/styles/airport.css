@@ -136,7 +136,7 @@ body{
   font-family: 'Courier New', Courier, monospace;
   font-size: calc(var(--dw) * 0.75);
   font-weight: 700;
-  color: var(--secondaryColor);
+  color: #f0d020;
   line-height: 1;
   padding: 0 calc(var(--dw) * 0.02);
   user-select: none;
@@ -228,7 +228,7 @@ body{
   font-family: 'Courier New', Courier, monospace;
   font-size: calc(var(--dw) * 0.75);
   font-weight: 700;
-  color: var(--primaryColor);
+  color: #f0d020;
   line-height: 1;
   user-select: none;
 }
@@ -285,4 +285,42 @@ body{
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+/* ── Board row indicator dots (two yellow dots left of each row) ── */
+
+.board-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--dw) * 0.12);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.board-indicator-dot {
+  width: calc(var(--dw) * 0.32);
+  height: calc(var(--dw) * 0.32);
+  border-radius: 50%;
+  background: #f0d020;
+  flex-shrink: 0;
+}
+
+/* When a timer completes, the two dots alternate illumination */
+@keyframes indicator-alt-a {
+  0%, 49.9% { opacity: 1; }
+  50%, 100%  { opacity: 0.15; }
+}
+
+@keyframes indicator-alt-b {
+  0%, 49.9% { opacity: 0.15; }
+  50%, 100%  { opacity: 1; }
+}
+
+.board-indicators--complete .board-indicator-dot:nth-child(1) {
+  animation: indicator-alt-a 0.8s step-end infinite;
+}
+
+.board-indicators--complete .board-indicator-dot:nth-child(2) {
+  animation: indicator-alt-b 0.8s step-end infinite;
 }

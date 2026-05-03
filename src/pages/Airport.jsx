@@ -12,7 +12,10 @@ const MONTHS = [
 ]
 
 function pad2(n) { return String(Math.max(0, n)).padStart(2, '0') }
-function pad3(n) { return String(Math.min(999, Math.max(0, n))).padStart(3, '0') }
+
+function padN(n, digits) {
+  return String(Math.min(Math.pow(10, digits) - 1, Math.max(0, Math.floor(n)))).padStart(digits, '0')
+}
 
 function breakTime(totalSeconds) {
   const t = Math.max(0, Math.floor(totalSeconds))
@@ -24,28 +27,41 @@ function breakTime(totalSeconds) {
   }
 }
 
-function BoardRow({ item, type, now, onClose, onReset, onToggle }) {
-  let totalSeconds
-  if (type === 'timer') {
-    totalSeconds = item.paused
+function itemTotalSeconds(item, now) {
+  if (item.type === 'timer') {
+    return item.paused
       ? item.timeLeft
       : Math.max(0, (item.timeToExp - now) / 1000)
-  } else {
-    totalSeconds = item.paused
-      ? item.pausedDiff / 1000
-      : (now - item.markedTime + item.pausedDiff) / 1000
   }
+  return item.paused
+    ? item.pausedDiff / 1000
+    : (now - item.markedTime + item.pausedDiff) / 1000
+}
 
+function daysColumnWidth(digits) {
+  if (digits <= 1) return 'calc(var(--dw))'
+  return `calc(${digits} * var(--dw) + ${digits - 1} * min(.35vw, .7vh))`
+}
+
+function BoardRow({ item, type, now, dayDigits, onClose, onReset, onToggle }) {
+  const totalSeconds = itemTotalSeconds({ ...item, type }, now)
   const { days, hours, minutes, seconds } = breakTime(totalSeconds)
   const label = item.label || (type === 'timer' ? 'TIMER' : 'WATCH')
+  const isComplete = type === 'timer' && totalSeconds <= 0
 
   return (
     <div className="board-row">
-      <FlipLabel label={label} />
-      <div className="board-digits board-digits--3">
-        {pad3(days).split('').map((ch, i) => <FlipDigit key={i} digit={ch} />)}
+      <div className={`board-indicators${isComplete ? ' board-indicators--complete' : ''}`}>
+        <div className="board-indicator-dot" />
+        <div className="board-indicator-dot" />
       </div>
-      <span className="board-sep">:</span>
+      <FlipLabel label={label} />
+      {dayDigits > 0 && <>
+        <div className="board-digits" style={{ width: daysColumnWidth(dayDigits) }}>
+          {padN(days, dayDigits).split('').map((ch, i) => <FlipDigit key={i} digit={ch} />)}
+        </div>
+        <span className="board-sep">:</span>
+      </>}
       <div className="board-digits board-digits--2">
         {pad2(hours).split('').map((ch, i) => <FlipDigit key={i} digit={ch} />)}
       </div>
@@ -133,8 +149,8 @@ export default function Airport() {
           </>}
           {showMeridum && (
             <div className="airport-meridum">
-              <span style={time.getHours() < 12 ? { color: 'var(--secondaryColor)' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>AM<br />
-              <span style={time.getHours() > 12 ? { color: 'var(--secondaryColor)' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>PM
+              <span style={time.getHours() < 12 ? { color: '#f0d020' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>AM<br />
+              <span style={time.getHours() >= 12 ? { color: '#f0d020' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>PM
             </div>
           )}
         </div>
@@ -149,18 +165,32 @@ export default function Airport() {
     ...stopwatches.map(sw => ({ ...sw, type: 'stopwatch' })),
   ]
 
+  const maxDays = Math.max(0, ...allItems.map(item => {
+    const secs = itemTotalSeconds(item, now)
+    return Math.floor(Math.max(0, secs) / 86400)
+  }))
+  const dayDigits = maxDays === 0 ? 0 : String(maxDays).length
+  const dayColWidth = dayDigits > 0 ? daysColumnWidth(dayDigits) : undefined
+
   return (
     <div className="airport-bg airport-bg--board">
       <div className="board-container" style={{ "--dw": "min(4vw, 7vh)" }}>
         {/* Header row */}
         <div className="board-row board-row--header">
+          {/* Invisible spacer to align with per-row indicators */}
+          <div className="board-indicators" style={{ visibility: 'hidden' }}>
+            <div className="board-indicator-dot" />
+            <div className="board-indicator-dot" />
+          </div>
           <div className="board-digits board-digits--name">
             <span className="board-hdr">NAME</span>
           </div>
-          <div className="board-digits board-digits--3">
-            <span className="board-hdr">DAYS</span>
-          </div>
-          <span className="board-sep board-sep--ghost">:</span>
+          {dayDigits > 0 && <>
+            <div className="board-digits" style={{ width: dayColWidth }}>
+              <span className="board-hdr">DAYS</span>
+            </div>
+            <span className="board-sep board-sep--ghost">:</span>
+          </>}
           <div className="board-digits board-digits--2">
             <span className="board-hdr">HRS</span>
           </div>
@@ -180,6 +210,7 @@ export default function Airport() {
             item={item}
             type={item.type}
             now={now}
+            dayDigits={dayDigits}
             onClose={() => item.type === 'timer' ? closeTimer(item.id) : closeStopwatch(item.id)}
             onReset={() => item.type === 'timer' ? resetTimer(item.id) : resetStopwatch(item.id)}
             onToggle={() => item.type === 'timer' ? toggleTimer(item.id) : toggleStopwatch(item.id)}
@@ -202,8 +233,8 @@ export default function Airport() {
           </>}
           {showMeridum && (
             <div className="airport-meridum airport-meridum--corner">
-              <span style={time.getHours() < 12 ? { color: 'var(--primaryColor)' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>AM<br />
-              <span style={time.getHours() >= 12 ? { color: 'var(--primaryColor)' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>PM
+              <span style={time.getHours() < 12 ? { color: '#f0d020' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>AM<br />
+              <span style={time.getHours() >= 12 ? { color: '#f0d020' } : { color: 'grey', opacity: 0.5 }}>&bull;</span>PM
             </div>
           )}
         </div>
