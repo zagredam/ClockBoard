@@ -152,9 +152,20 @@ body.alt .digital-digit-slot::before{
     transform: rotate(-23deg);
 }
 
+@keyframes sep-blink {
+  from, to { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 .digit-sep {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 60px;
-  color: var(--secondaryColor);
+  font-size: 12vh;
+  color: var(--primaryColor);
   user-select: none;
+  align-self: center;
+  animation: sep-blink 1s step-end infinite;
 }
+
+/* .digital-digit-group--compact .digit-sep {
+  font-size: 4vh;
+} */

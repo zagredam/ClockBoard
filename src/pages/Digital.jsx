@@ -78,7 +78,7 @@ const DigitalDigit = ({digit}) => {
 // 4 weekday + 1 space + 4 month + 1 space + 2 date + 1 comma + 4 year = 17
 const MIN_DATE_DIGITS = 17
 const DATE_FRONT_PAD = Array(MIN_DATE_DIGITS).fill(' ')
-const DATE_BACK_PAD  = Array(4).fill(' ')
+const DATE_BACK_PAD  = Array(MIN_DATE_DIGITS).fill(' ')
 
 function buildFullDateChars(date) {
   const day   = WEEKDAYS_FULL[date.getDay()].split('')
@@ -102,8 +102,9 @@ export default function Digital() {
 
   // dateAnimChars: null = show normal abbreviated display (17 digits)
   // otherwise: array of chars to render as DigitalDigit components
-  const [dateAnimChars, setDateAnimChars] = useState(null)
+  const [dateAnimChars, setDateAnimChars] = useState([...DATE_FRONT_PAD, ...buildFullDateChars(new Date()), ...DATE_BACK_PAD])
   const animCleanupRef = useRef([])
+  const remainingAnimation = useRef( [...DATE_FRONT_PAD, ...buildFullDateChars(new Date()), ...DATE_BACK_PAD])
 
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 200)
@@ -114,30 +115,25 @@ export default function Digital() {
   useEffect(() => {
     if (!showDate) return
 
-    const now = new Date()
-    const fullChars    = buildFullDateChars(now)
-    // Pad full date with leading and trailing blanks so the row never shrinks
-    // below MIN_DATE_DIGITS during the pop phase
-    const paddedChars  = [...DATE_FRONT_PAD, ...fullChars, ...DATE_BACK_PAD]
-    const introChars   = paddedChars.map((_, i) => i % 2 === 0 ? 'X' : '-')
+    // const now = new Date()
+    // const fullChars    = buildFullDateChars(now)
+    // const paddedChars  = [...DATE_FRONT_PAD, ...fullChars, ...DATE_BACK_PAD];
 
-    // Phase 1: alternating X / — (same width as padded full date)
-    setDateAnimChars(introChars)
+    //  setDateAnimChars(remainingAnimation)
 
     // Phase 2: full expanded (padded) date after 700 ms
     const t1 = setTimeout(() => {
-      setDateAnimChars([...paddedChars])
-
+      
       // Phase 3: pop characters off the right end every 350 ms;
       // stop once only the front-pad blanks remain (length === MIN_DATE_DIGITS)
-      let remaining = [...paddedChars]
+      // let remaining = [...(dateAnimChars ?? paddedChars ?? [])]
       const popInterval = setInterval(() => {
-        remaining = remaining.slice(0, -1)
-        if (remaining.length <= MIN_DATE_DIGITS && remaining.every(c => c === ' ')) {
+        remainingAnimation.current.shift();
+        if (remainingAnimation.current.every(c => c === ' ')) {
           clearInterval(popInterval)
           setDateAnimChars(null) // Phase 4: back to normal abbreviated display
         } else {
-          setDateAnimChars([...remaining])
+          setDateAnimChars([...remainingAnimation.current])
         }
       }, 350)
 
@@ -163,15 +159,16 @@ export default function Digital() {
       <div className={`digital-digit-group${hasTimers ? ' digital-digit-group--compact' : ''}`}>
         <DigitalDigit digit={String(Math.floor(h / 10))} />
         <DigitalDigit digit={String(h % 10)} />
-        <span className="digit-sep"> </span>
+        <span className="digit-sep">:</span>
         <DigitalDigit digit={String(Math.floor(m / 10))} />
         <DigitalDigit digit={String(m % 10)} />
         {showSeconds && <>
-          <span className="digit-sep"> </span>
+          <span className="digit-sep">:</span>
           <DigitalDigit digit={String(Math.floor(s / 10))} />
           <DigitalDigit digit={String(s % 10)} />
         </>}
         {showMeridum && <>
+          <span className="digit-sep"> </span>
           <DigitalDigit digit={time.getHours() >= 12 ? 'P' : 'A'} />
           <DigitalDigit digit="M" />
         </>}
@@ -180,7 +177,7 @@ export default function Digital() {
       {showDate && (
         <div className="digital-digit-group digital-digit-group--date">
           {dateAnimChars !== null
-            ? dateAnimChars.map((char, i) => <DigitalDigit key={i} digit={char} />)
+            ? dateAnimChars.slice(0,17).map((char, i) => <DigitalDigit key={i} digit={char} />)
             : <>
                 <DigitalDigit digit={WEEKDAYS_SHORT[time.getDay()][0]} />
                 <DigitalDigit digit={WEEKDAYS_SHORT[time.getDay()][1]} />
